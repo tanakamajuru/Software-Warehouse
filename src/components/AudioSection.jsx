@@ -26,26 +26,26 @@ function ProductCard({ product }) {
   );
 }
 
-function AudioSection() {
-  const audioProducts = [
-    { category: 'AUDIO', name: 'Vinova Headphone Sociis Buds T100...', price: '$36.00' },
-    { category: 'AUDIO', name: 'Wage Universal Wired Surround Gaming...', price: '$350.00' },
-    { category: 'AUDIO', name: 'Gaming Headset with Mic for Xbox One PS4...', price: '$200.00 – $230.00' }
+function SoftwareSolutions() {
+  const softwareProducts = [
+    { category: 'SECURITY', name: 'Antivirus Pro Suite - Zimbabwe Edition', price: '$29.99/year' },
+    { category: 'PRODUCTIVITY', name: 'Office Suite Professional - Local Business Edition', price: '$149.99' },
+    { category: 'EDUCATION', name: 'E-Learning Platform - Zimbabwe Curriculum', price: '$99.99/year' }
   ];
 
   return (
-    <div className="audio-banner">
+    <div className="software-banner">
       <div className="banner-image" />
       <div className="banner-products">
         <div className="section-header">
-          <h2 className="section-title">AUDIO & SOUND</h2>
+          <h2 className="section-title">SOFTWARE SOLUTIONS</h2>
           <div className="section-nav">
             <div className="nav-arrow"><ChevronLeftIcon /></div>
             <div className="nav-arrow"><ChevronRightIcon /></div>
           </div>
         </div>
-        <div className="audio-product-grid">
-          {audioProducts.map((product, index) => (
+        <div className="software-product-grid">
+          {softwareProducts.map((product, index) => (
             <ProductCard key={index} product={product} />
           ))}
         </div>
@@ -54,4 +54,4 @@ function AudioSection() {
   );
 }
 
-export default AudioSection;
+export default SoftwareSolutions;

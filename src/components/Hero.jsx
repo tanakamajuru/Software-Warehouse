@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import apiService from '../services/api';
 
 // Icon Components
 const ChevronLeftIcon = () => (
@@ -51,12 +52,15 @@ function SliderControls() {
 }
 
 // Side Card Component
-function SideCard({ tag, title, gradient }) {
+function SideCard({ tag, title, product, gradient }) {
   return (
     <div className="side-card" style={{ background: gradient }}>
       <div>
         <div className="card-tag">{tag}</div>
         <h2 className="card-title">{title}</h2>
+        {product && (
+          <div className="card-price">${product.price}</div>
+        )}
         <a href="#" className="card-link">
           Shop Now
           <ArrowRightIcon />
@@ -67,30 +71,93 @@ function SideCard({ tag, title, gradient }) {
 }
 
 function Hero() {
+  const [banners, setBanners] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchBanners = async () => {
+      try {
+        const data = await apiService.getBanners();
+        setBanners(Array.isArray(data) ? data : []);
+      } catch (error) {
+        console.error('Failed to fetch banners:', error);
+        setBanners([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBanners();
+  }, []);
+
+  const mainBanner = Array.isArray(banners) ? banners.find(b => b.position === 0) : null;
+  const sideBanners = Array.isArray(banners) ? banners.filter(b => b.position > 0 && b.position <= 2) : [];
+
   return (
     <section className="hero-section">
       <div className="main-hero">
-        <div className="hero-content">
-          <div className="hero-tag">GAMING GEAR</div>
-          <h1 className="hero-title">GAME CONTROLLER</h1>
-          <p className="hero-subtitle">Controller Type: Wireless Controller</p>
-          <button className="hero-btn">SHOP NOW</button>
-        </div>
+        {loading ? (
+          <div className="hero-content skeleton">
+            <div className="hero-tag skeleton-box"></div>
+            <h1 className="hero-title skeleton-box"></h1>
+            <p className="hero-subtitle skeleton-box"></p>
+            <button className="hero-btn skeleton-box"></button>
+          </div>
+        ) : mainBanner?.product ? (
+          <div className="hero-content">
+            <div className="hero-tag">FEATURED PRODUCT</div>
+            <h1 className="hero-title">{mainBanner.product.title}</h1>
+            <p className="hero-subtitle">{mainBanner.product.description?.substring(0, 100)}...</p>
+            <button className="hero-btn">SHOP NOW</button>
+          </div>
+        ) : (
+          <div className="hero-content">
+            <div className="hero-tag">ZIMBABWE SOFTWARE</div>
+            <h1 className="hero-title">Digital Solutions for Zimbabwean Businesses</h1>
+            <p className="hero-subtitle">Empowering local businesses with cutting-edge software solutions</p>
+            <button className="hero-btn">EXPLORE SOLUTIONS</button>
+          </div>
+        )}
         
         <SliderControls />
       </div>
       
       <div className="side-cards">
-        <SideCard 
-          tag="NEW ARRIVALS"
-          title="BAMBOOBUDS"
-          gradient="linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)"
-        />
-        <SideCard 
-          tag="NEW ARRIVALS"
-          title="HOMEPOD PRO"
-          gradient="linear-gradient(135deg, #0f172a 0%, #1e293b 100%)"
-        />
+        {loading ? (
+          <>
+            <div className="side-card skeleton">
+              <div className="skeleton-box"></div>
+            </div>
+            <div className="side-card skeleton">
+              <div className="skeleton-box"></div>
+            </div>
+          </>
+        ) : sideBanners.length > 0 ? (
+          sideBanners.map((banner) => (
+            <SideCard 
+              key={banner.id}
+              tag="NEW ARRIVALS"
+              title={banner.product.title}
+              product={banner.product}
+              gradient="linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)"
+            />
+          ))
+        ) : (
+          <>
+            <SideCard 
+              tag="POPULAR"
+              title="Accounting Suite"
+              product={{ price: "299" }}
+              gradient="linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)"
+            />
+            <SideCard 
+              tag="NEW"
+              title="Business CRM"
+              product={{ price: "199" }}
+              gradient="linear-gradient(135deg, #0f172a 0%, #1e293b 100%)"
+            />
+          </>
+        )}
       </div>
     </section>
   );

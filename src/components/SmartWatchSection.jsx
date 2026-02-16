@@ -26,32 +26,32 @@ function ProductCard({ product }) {
   );
 }
 
-function SmartWatchSection() {
-  const smartwatchProducts = [
-    { category: 'SMARTWATCH', name: 'Aenean Watch New Special Edition Amolet', price: '$180.00' },
-    { category: 'SMARTWATCH', name: 'Amoled Music Weather Fashion Smart Watch', price: '$144.00' },
-    { category: 'SMARTWATCH', name: 'Festina Mademoiselle Watch With Case...', price: '$147.00' }
+function BusinessSoftware() {
+  const businessProducts = [
+    { category: 'ERP', name: 'Business Management Suite - Enterprise Edition', price: '$999.99' },
+    { category: 'CRM', name: 'Customer Relationship Management - Professional', price: '$299.99' },
+    { category: 'HR', name: 'Human Resources Management System', price: '$199.99' }
   ];
 
   return (
     <div className="product-section">
       <div className="section-header">
-        <h2 className="section-title">SMARTWATCH</h2>
+        <h2 className="section-title">BUSINESS SOFTWARE</h2>
         <div className="section-nav">
           <div className="nav-arrow"><ChevronLeftIcon /></div>
           <div className="nav-arrow"><ChevronRightIcon /></div>
         </div>
       </div>
       <div className="product-grid-with-image">
-        {smartwatchProducts.map((product, index) => (
+        {businessProducts.map((product, index) => (
           <ProductCard key={index} product={product} />
         ))}
         <div className="large-product-image">
-          <div style={{fontSize: '48px', fontWeight: 800, color: '#1e40af'}}>WATCH IMAGE</div>
+          <div style={{fontSize: '48px', fontWeight: 800, color: '#1e40af'}}>BUSINESS SOLUTIONS</div>
         </div>
       </div>
     </div>
   );
 }
 
-export default SmartWatchSection;
+export default BusinessSoftware;

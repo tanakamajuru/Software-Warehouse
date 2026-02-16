@@ -1,0 +1,148 @@
+/* Zimbabwe Software Theme Styles */
+
+/* Software-specific product card styles */
+.software-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.license-type {
+  font-size: 12px;
+  color: #059669;
+  font-weight: 600;
+  background: #ecfdf5;
+  padding: 2px 6px;
+  border-radius: 4px;
+  display: inline-block;
+  width: fit-content;
+}
+
+.platform {
+  font-size: 11px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+/* Software banner styles */
+.software-banner {
+  background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+  color: white;
+  padding: 40px 0;
+  margin: 40px 0;
+  border-radius: 12px;
+}
+
+.software-banner .section-title {
+  color: white;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.software-product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* Zimbabwe-specific colors */
+.zim-green {
+  color: #065f46;
+  background: linear-gradient(135deg, #065f46 0%, #047857 100%);
+}
+
+.zim-red {
+  color: #991b1b;
+  background: linear-gradient(135deg, #991b1b 0%, #dc2626 100%);
+}
+
+.zim-gold {
+  color: #92400e;
+  background: linear-gradient(135deg, #92400e 0%, #d97706 100%);
+}
+
+/* Currency display */
+.currency-zwl {
+  font-weight: 600;
+  color: #059669;
+}
+
+.currency-usd {
+  font-weight: 600;
+  color: #1e40af;
+}
+
+/* Local business badges */
+.local-business {
+  background: #fef3c7;
+  color: #92400e;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.local-business::before {
+  content: "🇿🇼";
+  font-size: 10px;
+}
+
+/* Zimbabwe market specific */
+.zim-market-highlight {
+  border: 2px solid #065f46;
+  border-radius: 8px;
+  padding: 12px;
+  background: #ecfdf5;
+  margin: 16px 0;
+}
+
+.zim-market-highlight h4 {
+  color: #065f46;
+  margin: 0 0 8px 0;
+  font-size: 16px;
+}
+
+.zim-market-highlight p {
+  color: #047857;
+  margin: 0;
+  font-size: 14px;
+}
+
+/* Software category icons */
+.software-icon {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* Responsive adjustments for Zimbabwe market */
+@media (max-width: 768px) {
+  .software-banner {
+    padding: 20px 0;
+    margin: 20px 0;
+  }
+  
+  .software-product-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .software-banner .section-title {
+    font-size: 24px;
+  }
+}

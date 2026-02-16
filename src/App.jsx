@@ -4,10 +4,11 @@ import Hero from './components/Hero';
 import CategoryCarousel from './components/CategoryCarousel';
 import PolicySection from './components/PolicySection';
 import PromoGrid from './components/PromoGrid';
+import TrendingProducts from './components/TrendingProducts';
 import ProductSection from './components/ProductSection';
-import AudioSection from './components/AudioSection';
+import SoftwareSolutions from './components/AudioSection';
 import TestimonialSection from './components/TestimonialSection';
-import SmartWatchSection from './components/SmartWatchSection';
+import BusinessSoftware from './components/SmartWatchSection';
 import BlogSection from './components/BlogSection';
 import Footer from './components/Footer';
 import NewsletterPopup from './components/NewsletterPopup';
@@ -46,9 +47,10 @@ function App() {
       <CategoryCarousel />
       <PolicySection />
       <PromoGrid />
+      <TrendingProducts />
       <ProductSection />
-      <AudioSection />
-      <SmartWatchSection />
+      <SoftwareSolutions />
+      <BusinessSoftware />
       <BlogSection />
       <TestimonialSection />
       <Footer />

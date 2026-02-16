@@ -1,0 +1,122 @@
+/* Skeleton loading styles */
+.skeleton {
+  animation: skeleton-loading 1.5s infinite ease-in-out;
+}
+
+.skeleton-box {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+
+@keyframes skeleton-loading {
+  0% { opacity: 1; }
+  50% { opacity: 0.7; }
+  100% { opacity: 1; }
+}
+
+@keyframes skeleton-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Product card skeleton */
+.product-card.skeleton {
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 16px;
+  height: 300px;
+}
+
+.product-card.skeleton .product-image {
+  height: 200px;
+  margin-bottom: 12px;
+}
+
+.product-card.skeleton .product-info > div {
+  height: 20px;
+  margin-bottom: 8px;
+}
+
+.product-card.skeleton .product-name {
+  height: 24px;
+}
+
+/* Category skeleton */
+.category-item.skeleton {
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  height: 120px;
+}
+
+.category-item.skeleton .category-icon {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 12px;
+  border-radius: 50%;
+}
+
+.category-item.skeleton .category-name {
+  height: 16px;
+  width: 80%;
+  margin: 0 auto;
+}
+
+/* Hero skeleton */
+.hero-content.skeleton {
+  padding: 40px;
+}
+
+.hero-content.skeleton > div {
+  height: 40px;
+  margin-bottom: 16px;
+}
+
+.hero-content.skeleton .hero-title {
+  height: 60px;
+}
+
+.hero-content.skeleton .hero-subtitle {
+  height: 20px;
+  width: 60%;
+}
+
+.hero-content.skeleton .hero-btn {
+  height: 48px;
+  width: 150px;
+}
+
+/* Side card skeleton */
+.side-card.skeleton {
+  height: 200px;
+  padding: 24px;
+  border-radius: 8px;
+}
+
+.side-card.skeleton .skeleton-box {
+  height: 100%;
+  width: 100%;
+}
+
+/* Error message styles */
+.error-message {
+  color: #dc2626;
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 4px;
+  padding: 12px 16px;
+  margin: 16px 0;
+  font-size: 14px;
+}
+
+/* Loading states */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  color: #6b7280;
+}

@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import ProductCard from './ProductCard';
+import apiService from '../services/api';
 
 // Icon Components
 const ChevronLeftIcon = () => (
@@ -13,40 +15,79 @@ const ChevronRightIcon = () => (
   </svg>
 );
 
-// Product Card Component
-function ProductCard({ product }) {
-  return (
-    <div className="product-card">
-      <div className="product-image" />
-      <div className="product-category">{product.category}</div>
-      <div className="product-name">{product.name}</div>
-      <div className="product-rating">⭐⭐⭐⭐⭐ (0)</div>
-      {product.price && <div className="product-price">{product.price}</div>}
-    </div>
-  );
-}
+function ProductSection({ categoryId, brandId, title = "FEATURED SOFTWARE SOLUTIONS" }) {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-function ProductSection() {
-  const smartphoneProducts = [
-    { category: 'SMARTPHONE', name: 'Nova A12 Factory Unlocked 4G/LTE Smartphone' },
-    { category: 'SMARTPHONE', name: 'Original S24 Ultra 16GB 512GB Smartphone' },
-    { category: 'SMARTPHONE', name: 'Smartphone Nova Mate 50 Pro Snapdragon 888' },
-    { category: 'SMARTPHONE', name: 'Vinova 23 Triple Nascetur NFC Donec ROM Celulares' },
-    { category: 'SMARTPHONE', name: 'Vinova Dolor Note 10 Battery 120W Fast Charging' }
-  ];
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        let params = {};
+        if (categoryId) params.categoryId = categoryId;
+        if (brandId) params.brandId = brandId;
+        
+        const data = await apiService.getProducts(params);
+        setProducts(Array.isArray(data) ? data : []);
+      } catch (err) {
+        console.error('Failed to fetch products:', err);
+        setError(err.message);
+        setProducts([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, [categoryId, brandId]);
+
+  if (loading) {
+    return (
+      <div className="product-section">
+        <div className="section-header">
+          <h2 className="section-title">{title}</h2>
+          <div className="section-nav">
+            <div className="nav-arrow"><ChevronLeftIcon /></div>
+            <div className="nav-arrow"><ChevronRightIcon /></div>
+          </div>
+        </div>
+        <div className="product-grid">
+          {[...Array(5)].map((_, index) => (
+            <div key={index} className="product-card skeleton">
+              <div className="product-image skeleton-box"></div>
+              <div className="product-info">
+                <div className="product-category skeleton-box"></div>
+                <div className="product-name skeleton-box"></div>
+                <div className="product-rating skeleton-box"></div>
+                <div className="product-price skeleton-box"></div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="product-section">
+        <div className="error-message">Failed to load products: {error}</div>
+      </div>
+    );
+  }
 
   return (
     <div className="product-section">
       <div className="section-header">
-        <h2 className="section-title">TOP SMARTPHONE TRENDS</h2>
+        <h2 className="section-title">{title}</h2>
         <div className="section-nav">
           <div className="nav-arrow"><ChevronLeftIcon /></div>
           <div className="nav-arrow"><ChevronRightIcon /></div>
         </div>
       </div>
       <div className="product-grid">
-        {smartphoneProducts.map((product, index) => (
-          <ProductCard key={index} product={product} />
+        {products.map((product) => (
+          <ProductCard key={product.id} product={product} />
         ))}
       </div>
     </div>

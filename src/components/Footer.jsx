@@ -39,7 +39,7 @@ function Footer() {
       </div>
       <div className="footer-bottom">
         <div>
-          <div className="footer-info">Copyright © 2024 RisingBamboo.</div>
+          <div className="footer-info">Copyright © 2024 Software Warehouse.</div>
           <div className="footer-info">All Rights Reserved.</div>
         </div>
         <div>

@@ -1,8 +1,8 @@
 function PromoGrid() {
   const promos = [
-    { title: 'MACBOOK PRO 16', subtitle: '2K Fullview Touch Display', gradient: 'linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%)' },
-    { title: 'SMART SPEAKER', subtitle: 'Dual-Speaker True sound', gradient: 'linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%)' },
-    { title: 'BAMBOO SPEAKER', subtitle: 'Sound that Speaks for itself', gradient: 'linear-gradient(135deg, #dbeafe 0%, #e0f2fe 100%)' }
+    { title: 'Business Suite Pro', subtitle: 'Complete management solution for SMEs', gradient: 'linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%)' },
+    { title: 'School Management', subtitle: 'Digital solutions for Zimbabwean schools', gradient: 'linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%)' },
+    { title: 'Accounting Plus', subtitle: 'ZIMRA-compliant accounting software', gradient: 'linear-gradient(135deg, #dbeafe 0%, #e0f2fe 100%)' }
   ];
 
   return (

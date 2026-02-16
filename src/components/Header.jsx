@@ -70,8 +70,8 @@ function TopHeader() {
   return (
     <div className="top-header">
       <div className="logo">
-        <div className="logo-icon">e</div>
-        <div className="logo-text"><span style={{color: '#0ea5e9'}}>e</span>Commax</div>
+        <div className="logo-icon">S</div>
+        <div className="logo-text"><span style={{color: '#0ea5e9'}}>S</span>oftware Warehouse</div>
       </div>
       
       <div className="header-center">
@@ -113,7 +113,7 @@ function TopHeader() {
 
 // Trending Bar Component
 function TrendingBar() {
-  const trends = ['Headphone', 'Audio', 'Smartphone', 'Smartwatch'];
+  const trends = ['Audio Apps', 'Business Systems', 'Mobile Solutions', 'Smart Tools'];
   
   return (
     <div className="trending-bar">
@@ -182,8 +182,8 @@ function CompactNav() {
   return (
     <div className="compact-nav">
       <div className="compact-logo">
-        <div className="logo-icon">e</div>
-        <div className="logo-text"><span style={{color: '#0ea5e9'}}>e</span>Commax</div>
+        <div className="logo-icon">S</div>
+        <div className="logo-text"><span style={{color: '#0ea5e9'}}>S</span>oftware Warehouse</div>
       </div>
       
       <div className="compact-nav-links">

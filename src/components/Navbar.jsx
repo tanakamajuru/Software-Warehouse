@@ -37,10 +37,10 @@ const Navbar = () => {
                 <div className="mt-2 text-sm text-gray-600">
                   <span className="font-medium">SEARCH TRENDING:</span>
                   <span className="ml-2 space-x-4">
-                    <a href="#" className="hover:text-blue-600 transition-colors">Headphone</a>
-                    <a href="#" className="hover:text-blue-600 transition-colors">Audio</a>
-                    <a href="#" className="hover:text-blue-600 transition-colors">Smartphone</a>
-                    <a href="#" className="hover:text-blue-600 transition-colors">Smartwatch</a>
+                    <a href="#" className="hover:text-blue-600 transition-colors">Audio Apps</a>
+                    <a href="#" className="hover:text-blue-600 transition-colors">Business Systems</a>
+                    <a href="#" className="hover:text-blue-600 transition-colors">Mobile Solutions</a>
+                    <a href="#" className="hover:text-blue-600 transition-colors">Smart Tools</a>
                   </span>
                 </div>
               </div>
