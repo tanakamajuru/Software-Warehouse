@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
+import { CartProvider } from './contexts/CartContext';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import CategoryCarousel from './components/CategoryCarousel';
@@ -13,6 +16,11 @@ import BlogSection from './components/BlogSection';
 import Footer from './components/Footer';
 import NewsletterPopup from './components/NewsletterPopup';
 import ScrollTopButton from './components/ScrollTopButton';
+import AuthPage from './components/auth/AuthPage';
+import Admin from './pages/Admin';
+import ShopPage from './pages/ShopPage';
+import ProductPage from './pages/ProductPage';
+import CheckoutPage from './pages/CheckoutPage';
 import './App.css';
 
 function App() {
@@ -40,22 +48,40 @@ function App() {
   };
 
   return (
-    <div className="app">
-      <NewsletterPopup show={showPopup} onClose={() => setShowPopup(false)} />
-      <Header isScrolled={isNavScrolled} />
-      <Hero />
-      <CategoryCarousel />
-      <PolicySection />
-      <PromoGrid />
-      <TrendingProducts />
-      <ProductSection />
-      <SoftwareSolutions />
-      <BusinessSoftware />
-      <BlogSection />
-      <TestimonialSection />
-      <Footer />
-      <ScrollTopButton onClick={scrollToTop} />
-    </div>
+    <AuthProvider>
+      <CartProvider>
+        <Router>
+          <div className="app">
+          <Routes>
+            <Route path="/auth/*" element={<AuthPage />} />
+            <Route path="/admin" element={<Admin />} />
+            <Route path="/shop" element={<ShopPage />} />
+            <Route path="/products" element={<ProductPage />} />
+            <Route path="/product/:slug" element={<ProductPage />} />
+            <Route path="/checkout" element={<CheckoutPage />} />
+            <Route path="/*" element={
+              <>
+                <NewsletterPopup show={showPopup} onClose={() => setShowPopup(false)} />
+                <Header isScrolled={isNavScrolled} />
+                <Hero />
+                <CategoryCarousel />
+                <PolicySection />
+                <PromoGrid />
+                <TrendingProducts />
+                <ProductSection />
+                <SoftwareSolutions />
+                <BusinessSoftware />
+                <BlogSection />
+                <TestimonialSection />
+                <Footer />
+                <ScrollTopButton onClick={scrollToTop} />
+              </>
+            } />
+          </Routes>
+        </div>
+      </Router>
+    </CartProvider>
+  </AuthProvider>
   );
 }
 

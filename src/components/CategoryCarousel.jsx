@@ -1,20 +1,61 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import apiService from '../services/api';
 
 function CategoryCarousel() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         const data = await apiService.getCategories();
-        setCategories(Array.isArray(data) ? data : []);
+        console.log('Raw categories response:', data); // Debug raw response
+        
+        // Handle different response formats
+        let categoriesArray = [];
+        if (Array.isArray(data)) {
+          categoriesArray = data;
+        } else if (data && data.data && Array.isArray(data.data)) {
+          categoriesArray = data.data;
+        } else if (data && data.success && data.data && Array.isArray(data.data)) {
+          categoriesArray = data.data;
+        }
+        
+        console.log('Processed categories array:', categoriesArray); // Debug processed array
+        console.log('Number of categories:', categoriesArray.length); // Debug count
+        
+        // Map API categories to include icons
+        const iconMap = {
+          'processors': '💻',
+          'graphics-cards': '🎮',
+          'storage': '💾',
+          'memory': '🧠',
+          'software': '💿',
+          'peripherals': '⌨️'
+        };
+        
+        const mappedCategories = categoriesArray.map(category => ({
+          ...category,
+          icon: iconMap[category.slug] || '📦'
+        }));
+        
+        console.log('Mapped categories:', mappedCategories); // Debug log
+        setCategories(mappedCategories);
       } catch (err) {
         console.error('Failed to fetch categories:', err);
         setError(err.message);
-        setCategories([]);
+        // Fallback to hardcoded categories if API fails - include all 6
+        setCategories([
+          { id: '1', name: 'Processors', slug: 'processors', icon: '💻', image: null },
+          { id: '2', name: 'Graphics Cards', slug: 'graphics-cards', icon: '🎮', image: null },
+          { id: '3', name: 'Storage', slug: 'storage', icon: '💾', image: null },
+          { id: '4', name: 'Memory', slug: 'memory', icon: '🧠', image: null },
+          { id: '5', name: 'Software', slug: 'software', icon: '💿', image: null },
+          { id: '6', name: 'Peripherals', slug: 'peripherals', icon: '⌨️', image: null },
+        ]);
       } finally {
         setLoading(false);
       }
@@ -22,6 +63,10 @@ function CategoryCarousel() {
 
     fetchCategories();
   }, []);
+
+  const handleCategoryClick = (category) => {
+    navigate(`/shop/category/${category.slug}`);
+  };
 
   if (loading) {
     return (
@@ -46,25 +91,16 @@ function CategoryCarousel() {
     );
   }
 
-  // Fallback categories for Zimbabwe software market
-  const fallbackCategories = [
-    { id: '1', name: 'Accounting Software', image: null },
-    { id: '2', name: 'Business Management', image: null },
-    { id: '3', name: 'Educational Software', image: null },
-    { id: '4', name: 'Security Software', image: null },
-    { id: '5', name: 'Cloud Solutions', image: null },
-    { id: '6', name: 'Mobile Apps', image: null },
-    { id: '7', name: 'Website Builders', image: null },
-    { id: '8', name: 'CRM Systems', image: null },
-  ];
-
-  const displayCategories = categories.length > 0 ? categories : fallbackCategories;
-
   return (
     <div className="category-section">
       <div className="category-grid">
-        {displayCategories.map((category) => (
-          <div key={category.id} className="category-item">
+        {categories.map((category) => (
+          <div 
+            key={category.id} 
+            className="category-item" 
+            onClick={() => handleCategoryClick(category)}
+            style={{ cursor: 'pointer' }}
+          >
             {category.image ? (
               <img 
                 src={category.image} 
@@ -77,7 +113,7 @@ function CategoryCarousel() {
               />
             ) : null}
             <div className="category-icon" style={{ display: category.image ? 'none' : 'flex' }}>
-              {category.name.charAt(0).toUpperCase()}
+              {category.icon || category.name.charAt(0).toUpperCase()}
             </div>
             <div className="category-name">{category.name}</div>
           </div>

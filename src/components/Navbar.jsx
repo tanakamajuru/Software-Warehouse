@@ -1,6 +1,24 @@
-import { Search, Heart, GitCompare, ShoppingBag, Settings, Menu, DollarSign } from 'lucide-react'
+import { Search, Heart, GitCompare, ShoppingBag, Settings, Menu, DollarSign, User, LogOut } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../contexts/AuthContext'
 
 const Navbar = () => {
+  const navigate = useNavigate()
+  const { user, logout } = useAuth()
+
+  const handleAuthClick = () => {
+    if (user) {
+      logout()
+      navigate('/')
+    } else {
+      navigate('/auth/login')
+    }
+  }
+
+  const handleProfileClick = () => {
+    // Navigate to profile page (to be implemented)
+    navigate('/profile')
+  }
   return (
     <div className="bg-white border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -49,6 +67,39 @@ const Navbar = () => {
 
           {/* Right Section - Icons and Price */}
           <div className="flex items-center space-x-4">
+            {/* User Account */}
+            <div className="flex items-center space-x-2">
+              {user ? (
+                <>
+                  <button 
+                    onClick={handleProfileClick}
+                    className="flex items-center space-x-2 p-2 text-gray-600 hover:text-blue-600 transition-colors"
+                    title="My Profile"
+                  >
+                    <User className="h-6 w-6" />
+                    <span className="text-sm font-medium hidden sm:block">
+                      {user.name || user.email}
+                    </span>
+                  </button>
+                  <button 
+                    onClick={handleAuthClick}
+                    className="flex items-center space-x-1 p-2 text-gray-600 hover:text-red-600 transition-colors"
+                    title="Logout"
+                  >
+                    <LogOut className="h-6 w-6" />
+                  </button>
+                </>
+              ) : (
+                <button 
+                  onClick={handleAuthClick}
+                  className="flex items-center space-x-2 p-2 text-gray-600 hover:text-blue-600 transition-colors"
+                  title="Sign In / Create Account"
+                >
+                  <User className="h-6 w-6" />
+                </button>
+              )}
+            </div>
+
             {/* Favorites */}
             <button className="p-2 text-gray-600 hover:text-blue-600 transition-colors">
               <Heart className="h-6 w-6" />

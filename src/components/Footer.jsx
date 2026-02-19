@@ -14,11 +14,11 @@ function Footer() {
         <div>
           <div className="footer-title">Follow Us:</div>
           <div className="social-icons">
-            <div className="social-icon">f</div>
-            <div className="social-icon">𝕏</div>
-            <div className="social-icon">in</div>
-            <div className="social-icon">📷</div>
-            <div className="social-icon">📌</div>
+            <div className="social-icon">🇿🇼</div>
+            <div className="social-icon">📧</div>
+            <div className="social-icon">💼</div>
+            <div className="social-icon">�</div>
+            <div className="social-icon">🌐</div>
           </div>
         </div>
         <div>
@@ -32,21 +32,21 @@ function Footer() {
         <div>
           <div className="footer-title">Subscribe to Our Newsletter</div>
           <div className="newsletter-input">
-            <input type="email" placeholder="ENTER YOUR EMAIL" className="footer-input" />
-            <button className="submit-btn">Submit</button>
+            <input type="email" placeholder="ENTER YOUR ZIMBABWE EMAIL" className="footer-input" />
+            <button className="submit-btn">Subscribe</button>
           </div>
         </div>
       </div>
       <div className="footer-bottom">
-        <div>
-          <div className="footer-info">Copyright © 2024 Software Warehouse.</div>
+        {/* <div>
+          <div className="footer-info">Copyright © 2024 Zimbabwe Software Solutions.</div>
           <div className="footer-info">All Rights Reserved.</div>
-        </div>
+        </div> */}
         <div>
           <div className="footer-info">Store Location:</div>
-          <div className="footer-info">15 West 21th Street, Miami FL, USA</div>
-          <div className="footer-info">Call Us Now +123-456-789</div>
-          <div className="footer-info">Email: info@example.com</div>
+          <div className="footer-info">Sam Levy Village, Borrowdale, Harare, Zimbabwe</div>
+          <div className="footer-info">Call Us +263 242 745 890</div>
+          <div className="footer-info">Email: info@zimsoftware.co.zw</div>
         </div>
       </div>
     </div>

@@ -10,24 +10,24 @@ const StarIcon = () => (
 function TestimonialSection() {
   const testimonials = [
     {
-      name: 'Jennifer',
-      location: 'From California',
-      title: 'Great Price & Services',
-      content: 'I have been going to Certified Auto for almost four years now, and have always received great service and fair prices. They always go out of their way to finish work on time, and if it is very busy they will rent a car.',
+      name: 'Tendai Wenyika',
+      location: 'From Harare',
+      title: 'Excellent Business Software',
+      content: 'Zimbabwe Software Solutions transformed our accounting department. The ZIMRA-compliant software saved us hours of work and eliminated errors. Their local support team is always available when we need help.',
       avatar: 'https://ecommax.risingbamboo.com/wp-content/uploads/2022/10/persion-2.png'
     },
     {
-      name: 'Jessica',
-      location: 'From Chicago',
-      title: 'Great Price & Services',
-      content: 'I have been going to Certified Auto for almost four years now, and have always received great service and fair prices. They always go out of their way to finish work on time, and if it is very busy they will rent a car.',
+      name: 'Chipo Musarurwa',
+      location: 'From Bulawayo',
+      title: 'Reliable CRM System',
+      content: 'We implemented their CRM system across all our branches in Bulawayo and Harare. The software is intuitive and our staff adapted quickly. Best investment for our growing business.',
       avatar: 'https://ecommax.risingbamboo.com/wp-content/uploads/2022/10/persion-4.png'
     },
     {
-      name: 'Daniel',
-      location: 'From Seattle',
-      title: 'Great Price & Services',
-      content: 'I have been going to Certified Auto for almost four years now, and have always received great service and fair prices. They always go out of their way to finish work on time, and if it is very busy they will rent a car.',
+      name: 'Farai Gondo',
+      location: 'From Mutare',
+      title: 'Outstanding Educational Tools',
+      content: 'Their educational software aligned with Zimbabwe curriculum has improved student performance at our school. Teachers find it easy to use and parents appreciate the detailed progress reports.',
       avatar: 'https://ecommax.risingbamboo.com/wp-content/uploads/2022/10/persion-3.png'
     }
   ];
@@ -36,7 +36,7 @@ function TestimonialSection() {
     <div className="testimonial-section">
       <div className="section-header">
         <h2 className="section-title">What our customers say</h2>
-        <p className="section-subtitle">Our references are very valuable result of a great effort</p>
+        <p className="section-subtitle">Trusted by Zimbabwean businesses nationwide</p>
       </div>
 
       <div className="testimonial-grid">

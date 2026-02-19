@@ -1,5 +1,16 @@
 import React from 'react';
-import { Settings } from 'lucide-react';
+import { Settings, User, Shield } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
+import { useCart } from '../contexts/CartContext';
+import CartContext from '../contexts/CartContext';
+import CartDrawer from './CartDrawer';
+import { useNavigate } from 'react-router-dom';
+
+const formatPrice = (price) => {
+  const numPrice = parseFloat(price);
+  if (isNaN(numPrice)) return '0.00';
+  return numPrice.toFixed(2);
+};
 
 // Icon Components
 const MenuIcon = () => (
@@ -66,7 +77,24 @@ const MapPinIcon = () => (
 );
 
 // Top Header Component
-function TopHeader() {
+function TopHeader({ onCartClick }) {
+  const { user, logout } = useAuth();
+  const { totalItems, totalPrice } = useCart();
+  const navigate = useNavigate();
+
+  const handleAuthClick = () => {
+    if (user) {
+      logout();
+      navigate('/');
+    } else {
+      navigate('/auth/login');
+    }
+  };
+
+  const handleCartClick = () => {
+    onCartClick();
+  };
+
   return (
     <div className="top-header">
       <div className="logo">
@@ -89,18 +117,38 @@ function TopHeader() {
       </div>
       
       <div className="header-actions">
+        {/* Admin Access - Only show for admin users */}
+        {user && (
+          <>
+            <div 
+              className="icon-btn" 
+              onClick={() => navigate('/admin')} 
+              style={{cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #ccc', padding: '5px'}} 
+              title="Admin Dashboard"
+            >
+              <Shield size={20} color="#666" />
+            </div>
+
+          </>
+        )}
+        
+        {/* User Account */}
+        <div className="icon-btn" onClick={handleAuthClick} style={{cursor: 'pointer'}} title={user ? "My Account" : "Sign In"}>
+          <User />
+        </div>
+        
         <div className="icon-btn">
           <HeartIcon />
         </div>
         
-        <div className="icon-btn">
+        <div className="icon-btn" onClick={handleCartClick} style={{cursor: 'pointer'}} title="Shopping Cart">
           <CartIcon />
-          <span className="badge">0</span>
+          <span className="badge">{totalItems}</span>
         </div>
         
-        <div className="cart-btn">
+        <div className="cart-btn" onClick={handleCartClick} style={{cursor: 'pointer'}} title="Shopping Cart">
           <ShoppingBagIcon />
-          $0.00
+          {formatPrice(totalPrice)}
         </div>
         
         <div className="icon-btn">
@@ -132,19 +180,32 @@ function TrendingBar() {
 
 // Main Navigation Component
 function MainNav({ isScrolled }) {
-  const navItems = ['HOME', 'SHOP', 'PRODUCT', 'PAGES', 'BLOG'];
+  const navigate = useNavigate();
+  const { totalItems, totalPrice } = useCart();
+  const [isCartOpen, setIsCartOpen] = React.useState(false);
+
+  const handleCartClick = () => {
+    setIsCartOpen(!isCartOpen);
+    onCartClick();
+  };
+
+  const navItems = [
+    { name: 'HOME', path: '/' },
+    { name: 'SHOP', path: '/shop' },
+    { name: 'PRODUCT', path: '/products' }
+  ];
   
   return (
     <nav className={`main-nav ${isScrolled ? 'nav-scrolled' : ''}`}>
       <div className="nav-links">
         {navItems.map((item, index) => (
-          <a 
-            key={index} 
-            href="#" 
+          <button
+            key={index}
+            onClick={() => navigate(item.path)}
             className={`nav-link ${index === 0 ? 'nav-link-active' : ''}`}
           >
-            {item}
-          </a>
+            {item.name}
+          </button>
         ))}
       </div>
       
@@ -167,18 +228,48 @@ function MainNav({ isScrolled }) {
 }
 
 function Header({ isScrolled }) {
+  const [isCartOpen, setIsCartOpen] = React.useState(false);
+
+  const handleCartClick = () => {
+    setIsCartOpen(true);
+  };
+
+  const handleCartClose = () => {
+    setIsCartOpen(false);
+  };
+
   return (
-    <header className="header">
-      <TopHeader />
-      <TrendingBar />
-      <MainNav isScrolled={isScrolled} />
-      {isScrolled && <CompactNav />}
-    </header>
+    <>
+      <header className="header">
+        <TopHeader onCartClick={handleCartClick} />
+        <TrendingBar />
+        <MainNav isScrolled={isScrolled} onCartClick={handleCartClick} />
+        {isScrolled && <CompactNav onCartClick={handleCartClick} />}
+      </header>
+      <CartDrawer isOpen={isCartOpen} onClose={handleCartClose} />
+    </>
   );
 }
 
 // Compact Navigation for Scrolled State
-function CompactNav() {
+function CompactNav({ onCartClick }) {
+  const { user, logout } = useAuth();
+  const { totalItems, totalPrice } = useCart();
+  const navigate = useNavigate();
+
+  const handleAuthClick = () => {
+    if (user) {
+      logout();
+      navigate('/');
+    } else {
+      navigate('/auth/login');
+    }
+  };
+
+  const handleCartClick = () => {
+    onCartClick();
+  };
+
   return (
     <div className="compact-nav">
       <div className="compact-logo">
@@ -187,25 +278,38 @@ function CompactNav() {
       </div>
       
       <div className="compact-nav-links">
-        <a href="#" className="nav-link nav-link-active">HOME</a>
-        <a href="#" className="nav-link">SHOP</a>
-        <a href="#" className="nav-link">PRODUCT</a>
-        <a href="#" className="nav-link">PAGES</a>
-        <a href="#" className="nav-link">BLOG</a>
+        <button onClick={() => navigate('/')} className="nav-link nav-link-active">HOME</button>
+        <button onClick={() => navigate('/shop')} className="nav-link">SHOP</button>
+        <button onClick={() => navigate('/products')} className="nav-link">PRODUCT</button>
       </div>
       
       <div className="compact-actions">
+        {/* Admin Access - Only show for admin users */}
+        {user && (
+          <div 
+            className="icon-btn" 
+            onClick={() => navigate('/admin')} 
+            style={{cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center'}} 
+            title="Admin Dashboard"
+          >
+            <Shield size={20} color="#666" />
+          </div>
+        )}
+        
+        {/* User Account */}
+        <div className="icon-btn" onClick={handleAuthClick} style={{cursor: 'pointer'}} title={user ? "My Account" : "Sign In"}>
+          <User />
+        </div>
+        
         <div className="icon-btn">
           <HeartIcon />
         </div>
-        <div className="icon-btn">
+        
+        <div className="icon-btn" onClick={handleCartClick} style={{cursor: 'pointer'}} title="Shopping Cart">
           <CartIcon />
-          <span className="badge">0</span>
+          <span className="badge">{totalItems}</span>
         </div>
-        <div className="cart-btn">
-          <ShoppingBagIcon />
-          $0.00
-        </div>
+        
         <div className="icon-btn">
           <Settings />
         </div>

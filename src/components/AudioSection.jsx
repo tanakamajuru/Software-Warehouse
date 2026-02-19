@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import ProductCard from './ProductCard';
+import apiService from '../services/api';
 
 // Icon Components
 const ChevronLeftIcon = () => (
@@ -13,25 +15,80 @@ const ChevronRightIcon = () => (
   </svg>
 );
 
-// Product Card Component
-function ProductCard({ product }) {
-  return (
-    <div className="product-card">
-      <div className="product-image" />
-      <div className="product-category">{product.category}</div>
-      <div className="product-name">{product.name}</div>
-      <div className="product-rating">⭐⭐⭐⭐⭐ (0)</div>
-      {product.price && <div className="product-price">{product.price}</div>}
-    </div>
-  );
-}
-
 function SoftwareSolutions() {
-  const softwareProducts = [
-    { category: 'SECURITY', name: 'Antivirus Pro Suite - Zimbabwe Edition', price: '$29.99/year' },
-    { category: 'PRODUCTIVITY', name: 'Office Suite Professional - Local Business Edition', price: '$149.99' },
-    { category: 'EDUCATION', name: 'E-Learning Platform - Zimbabwe Curriculum', price: '$99.99/year' }
-  ];
+  const [softwareProducts, setSoftwareProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchSoftwareProducts = async () => {
+      try {
+        const data = await apiService.getProducts({ limit: 10 });
+        const productsArray = Array.isArray(data) ? data : (data.data || []);
+        
+        // Filter for software products
+        const software = productsArray.filter(product => 
+          product.categoryName === 'Software'
+        ).slice(0, 3);
+        
+        setSoftwareProducts(software);
+      } catch (err) {
+        console.error('Failed to fetch software products:', err);
+        setError(err.message);
+        // Fallback to mock data
+        setSoftwareProducts([
+          { id: '1', title: 'Antivirus Pro Suite', categoryName: 'Software', price: '29.99', imageCover: null },
+          { id: '2', title: 'Office Suite Professional', categoryName: 'Software', price: '149.99', imageCover: null },
+          { id: '3', title: 'E-Learning Platform', categoryName: 'Software', price: '99.99', imageCover: null }
+        ]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSoftwareProducts();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="software-banner">
+        <div className="banner-products">
+          <div className="section-header">
+            <h2 className="section-title">SOFTWARE SOLUTIONS</h2>
+            <div className="section-nav">
+              <div className="nav-arrow"><ChevronLeftIcon /></div>
+              <div className="nav-arrow"><ChevronRightIcon /></div>
+            </div>
+          </div>
+          <div className="software-product-grid">
+            {[...Array(3)].map((_, index) => (
+              <div key={index} className="product-card skeleton">
+                <div className="product-image skeleton-box"></div>
+                <div className="product-info">
+                  <div className="product-category skeleton-box"></div>
+                  <div className="product-name skeleton-box"></div>
+                  <div className="product-price skeleton-box"></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="software-banner">
+        <div className="banner-products">
+          <div className="section-header">
+            <h2 className="section-title">SOFTWARE SOLUTIONS</h2>
+          </div>
+          <div className="error-message">Failed to load software products: {error}</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="software-banner">
@@ -45,8 +102,8 @@ function SoftwareSolutions() {
           </div>
         </div>
         <div className="software-product-grid">
-          {softwareProducts.map((product, index) => (
-            <ProductCard key={index} product={product} />
+          {softwareProducts.map((product) => (
+            <ProductCard key={product.id} product={product} />
           ))}
         </div>
       </div>

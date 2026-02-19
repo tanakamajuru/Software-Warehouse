@@ -15,20 +15,38 @@ const ChevronRightIcon = () => (
   </svg>
 );
 
-function ProductSection({ categoryId, brandId, title = "FEATURED SOFTWARE SOLUTIONS" }) {
+function ProductSection({ categoryId, brandId, title = "FEATURED PRODUCTS" }) {
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchProductsAndCategories = async () => {
       try {
-        let params = {};
+        let params = { limit: 10 };
         if (categoryId) params.categoryId = categoryId;
         if (brandId) params.brandId = brandId;
         
-        const data = await apiService.getProducts(params);
-        setProducts(Array.isArray(data) ? data : []);
+        // Fetch both products and categories
+        const [productsResponse, categoriesResponse] = await Promise.all([
+          apiService.getProducts(params),
+          apiService.getCategories()
+        ]);
+        
+        // Handle paginated response
+        const productsArray = Array.isArray(productsResponse) ? productsResponse : (productsResponse.data || []);
+        const categoriesArray = Array.isArray(categoriesResponse) ? categoriesResponse : (categoriesResponse.data || []);
+        
+        // Create category lookup map
+        const categoryMap = {};
+        categoriesArray.forEach(category => {
+          categoryMap[category.id] = category.name || category.slug || 'Unknown';
+        });
+        
+        console.log('ProductSection - Category map:', categoryMap);
+        setCategories(categoryMap);
+        setProducts(productsArray.slice(0, 5)); // Take first 5 products
       } catch (err) {
         console.error('Failed to fetch products:', err);
         setError(err.message);
@@ -38,7 +56,7 @@ function ProductSection({ categoryId, brandId, title = "FEATURED SOFTWARE SOLUTI
       }
     };
 
-    fetchProducts();
+    fetchProductsAndCategories();
   }, [categoryId, brandId]);
 
   if (loading) {
@@ -87,7 +105,7 @@ function ProductSection({ categoryId, brandId, title = "FEATURED SOFTWARE SOLUTI
       </div>
       <div className="product-grid">
         {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <ProductCard key={product.id} product={product} categories={categories} />
         ))}
       </div>
     </div>

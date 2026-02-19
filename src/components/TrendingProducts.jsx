@@ -24,62 +24,42 @@ const TrendingUpIcon = () => (
 
 function TrendingProducts() {
   const [trendingProducts, setTrendingProducts] = useState([]);
+  const [categories, setCategories] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     const fetchTrendingProducts = async () => {
       try {
-        // Fetch from multiple featured endpoints to get diverse products
-        const [recentData, topBoughtData, lowStockData] = await Promise.all([
+        // Fetch from multiple featured endpoints and categories
+        const [recentData, topBoughtData, categoriesResponse] = await Promise.all([
           apiService.getRecentProducts(),
           apiService.getTopBoughtProducts(),
-          apiService.getLowStockFeatured()
+          apiService.getCategories()
         ]);
-
+        
+        // Handle different response formats
+        const recentArray = Array.isArray(recentData) ? recentData : (recentData.data || []);
+        const topBoughtArray = Array.isArray(topBoughtData) ? topBoughtData : (topBoughtData.data || []);
+        const categoriesArray = Array.isArray(categoriesResponse) ? categoriesResponse : (categoriesResponse.data || []);
+        
+        // Create category lookup map
+        const categoryMap = {};
+        categoriesArray.forEach(category => {
+          categoryMap[category.id] = category.name || category.slug || 'Unknown';
+        });
+        
+        console.log('TrendingProducts - Category map:', categoryMap);
+        setCategories(categoryMap);
+        
         // Combine and deduplicate products
-        const allProducts = [
-          ...(Array.isArray(recentData) ? recentData : []),
-          ...(Array.isArray(topBoughtData) ? topBoughtData : []),
-          ...(Array.isArray(lowStockData) ? lowStockData : [])
-        ];
-
-        // Remove duplicates by ID
+        const allProducts = [...recentArray, ...topBoughtArray];
         const uniqueProducts = allProducts.filter((product, index, self) =>
           index === self.findIndex((p) => p.id === product.id)
         );
-
-        // Filter for software categories (Headphone, Audio, Smartphone, Smartwatch equivalents)
-        const softwareProducts = uniqueProducts.filter(product => {
-          const title = product.title?.toLowerCase() || '';
-          const description = product.description?.toLowerCase() || '';
-          
-          // Look for software-related keywords
-          return (
-            title.includes('software') ||
-            title.includes('app') ||
-            title.includes('suite') ||
-            title.includes('system') ||
-            title.includes('management') ||
-            title.includes('accounting') ||
-            title.includes('crm') ||
-            title.includes('security') ||
-            title.includes('antivirus') ||
-            title.includes('office') ||
-            title.includes('business') ||
-            description.includes('software') ||
-            description.includes('application') ||
-            description.includes('digital')
-          );
-        });
-
-        // Take first 8 products and sort by created date
-        const sortedProducts = softwareProducts
-          .slice(0, 8)
-          .sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate));
-
-        setTrendingProducts(sortedProducts);
+        
+        console.log('Trending products:', uniqueProducts);
+        setTrendingProducts(uniqueProducts);
       } catch (err) {
         console.error('Failed to fetch trending products:', err);
         setError(err.message);
@@ -92,19 +72,9 @@ function TrendingProducts() {
     fetchTrendingProducts();
   }, []);
 
-  const handlePrevious = () => {
-    setCurrentIndex(prev => (prev - 1 + Math.max(1, trendingProducts.length - 2)) % Math.max(1, trendingProducts.length - 2));
-  };
-
-  const handleNext = () => {
-    setCurrentIndex(prev => (prev + 1) % Math.max(1, trendingProducts.length - 2));
-  };
-
-  const visibleProducts = trendingProducts.slice(currentIndex, currentIndex + 4);
-
   if (loading) {
     return (
-      <div className="trending-section">
+      <div className="product-section">
         <div className="section-header">
           <div className="section-title-with-icon">
             <TrendingUpIcon />
@@ -116,7 +86,7 @@ function TrendingProducts() {
           </div>
         </div>
         <div className="product-grid">
-          {[...Array(4)].map((_, index) => (
+          {[...Array(5)].map((_, index) => (
             <div key={index} className="product-card skeleton">
               <div className="product-image skeleton-box"></div>
               <div className="product-info">
@@ -134,11 +104,11 @@ function TrendingProducts() {
 
   if (error) {
     return (
-      <div className="trending-section">
+      <div className="product-section">
         <div className="section-header">
           <div className="section-title-with-icon">
             <TrendingUpIcon />
-            <h2 className="section-title">TRENDING SOFTWARE</h2>
+            <h2 className="section-title">TRENDING PRODUCTS</h2>
           </div>
         </div>
         <div className="error-message">
@@ -150,60 +120,39 @@ function TrendingProducts() {
 
   if (trendingProducts.length === 0) {
     return (
-      <div className="trending-section">
+      <div className="product-section">
         <div className="section-header">
           <div className="section-title-with-icon">
             <TrendingUpIcon />
-            <h2 className="section-title">TRENDING SOFTWARE</h2>
+            <h2 className="section-title">TRENDING PRODUCTS</h2>
           </div>
         </div>
         <div className="no-results">
-          <p>No trending software products available at the moment.</p>
-          <p>Check back soon for the latest Audio Apps, Business Systems, Mobile Solutions & Smart Tools!</p>
+          <p>No trending products available at the moment.</p>
+          <p>Check back soon for the latest Processors, Graphics Cards, Storage, Memory & Peripherals!</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="trending-section">
+    <div className="product-section">
       <div className="section-header">
         <div className="section-title-with-icon">
           <TrendingUpIcon />
-          <h2 className="section-title">TRENDING SOFTWARE</h2>
+          <h2 className="section-title">TRENDING PRODUCTS</h2>
         </div>
-        <div className="section-info">
-          <p>Trending software: Audio Apps, Business Systems, Mobile Solutions & Smart Tools</p>
+        <div className="section-nav">
+          <div className="nav-arrow"><ChevronLeftIcon /></div>
+          <div className="nav-arrow"><ChevronRightIcon /></div>
         </div>
-        {trendingProducts.length > 4 && (
-          <div className="section-nav">
-            <div className="nav-arrow" onClick={handlePrevious}>
-              <ChevronLeftIcon />
-            </div>
-            <div className="nav-arrow" onClick={handleNext}>
-              <ChevronRightIcon />
-            </div>
-          </div>
-        )}
       </div>
       
       <div className="product-grid">
-        {visibleProducts.map((product) => (
-          <ProductCard key={product.id} product={product} />
+        {trendingProducts.slice(0, 5).map((product) => (
+          <ProductCard key={product.id} product={product} categories={categories} />
         ))}
       </div>
-
-      {trendingProducts.length > 4 && (
-        <div className="trending-indicators">
-          {[...Array(Math.ceil(trendingProducts.length / 4))].map((_, index) => (
-            <div
-              key={index}
-              className={`indicator ${index === Math.floor(currentIndex / 4) ? 'active' : ''}`}
-              onClick={() => setCurrentIndex(index * 4)}
-            />
-          ))}
-        </div>
-      )}
     </div>
   );
 }

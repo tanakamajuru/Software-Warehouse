@@ -137,7 +137,7 @@ function Hero() {
             <SideCard 
               key={banner.id}
               tag="NEW ARRIVALS"
-              title={banner.product.title}
+              title={banner.product?.title || 'New Product'}
               product={banner.product}
               gradient="linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)"
             />

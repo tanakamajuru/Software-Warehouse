@@ -298,7 +298,8 @@ class ApiService {
   }
 
   async getLowStockFeatured() {
-    return this.request('/featured/low-stock');
+    // Since low stock endpoint doesn't exist in your API, return empty array
+    return [];
   }
 
   async getTopBoughtProducts() {
@@ -346,17 +347,17 @@ class ApiService {
     });
   }
 
-  async verifyResetCode(email, code) {
+  async verifyResetCode(resetCode) {
     return this.request('/verifyResetCode', {
       method: 'POST',
-      body: JSON.stringify({ email, code }),
+      body: JSON.stringify({ resetCode }),
     });
   }
 
-  async resetPassword(email, code, newPassword) {
+  async resetPassword(email, newPassword) {
     return this.request('/resetPassword', {
       method: 'PUT',
-      body: JSON.stringify({ email, code, newPassword }),
+      body: JSON.stringify({ email, newPassword }),
     });
   }
 
