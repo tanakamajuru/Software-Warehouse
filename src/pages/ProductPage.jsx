@@ -201,7 +201,6 @@ const ProductPage = () => {
     console.log('All category fields:', {
       categoryId: product.categoryId,
       categoryName: product.categoryName,
-      categoryName: product.category?.name,
       category: product.category,
       categoryNameName: product.categoryName?.name,
       categoryCategoryName: product.category?.categoryName

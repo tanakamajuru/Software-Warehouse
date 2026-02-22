@@ -46,7 +46,7 @@ function Footer() {
           <div className="footer-info">Store Location:</div>
           <div className="footer-info">Sam Levy Village, Borrowdale, Harare, Zimbabwe</div>
           <div className="footer-info">Call Us +263 242 745 890</div>
-          <div className="footer-info">Email: info@zimsoftware.co.zw</div>
+          <div className="footer-info">Email: info@softwarewarehouses.co.zw</div>
         </div>
       </div>
     </div>
