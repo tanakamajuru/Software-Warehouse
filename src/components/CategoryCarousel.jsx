@@ -70,10 +70,11 @@ function CategoryCarousel() {
 
   if (loading) {
     return (
-      <div className="category-section">
-        <div className="category-grid">
-          {[...Array(8)].map((_, index) => (
-            <div key={index} className="category-item skeleton">
+      <div className="category-section container responsive-section">
+        <div className="category-grid grid">
+          {[...Array(6)].map((_, index) => (
+            <div key={index} className="category-item responsive-card skeleton">
+              <div className="category-image skeleton-box"></div>
               <div className="category-icon skeleton-box"></div>
               <div className="category-name skeleton-box"></div>
             </div>
@@ -85,19 +86,19 @@ function CategoryCarousel() {
 
   if (error) {
     return (
-      <div className="category-section">
-        <div className="error-message">Failed to load categories: {error}</div>
+      <div className="category-section container responsive-section">
+        <div className="error-message text-center">Failed to load categories: {error}</div>
       </div>
     );
   }
 
   return (
-    <div className="category-section">
-      <div className="category-grid">
+    <div className="category-section container responsive-section">
+      <div className="category-grid grid">
         {categories.map((category) => (
           <div 
             key={category.id} 
-            className="category-item" 
+            className="category-item responsive-card" 
             onClick={() => handleCategoryClick(category)}
             style={{ cursor: 'pointer' }}
           >
@@ -105,7 +106,7 @@ function CategoryCarousel() {
               <img 
                 src={category.image} 
                 alt={category.name}
-                className="category-image"
+                className="category-image responsive-image"
                 onError={(e) => {
                   e.target.style.display = 'none';
                   e.target.nextSibling.style.display = 'flex';
@@ -115,7 +116,7 @@ function CategoryCarousel() {
             <div className="category-icon" style={{ display: category.image ? 'none' : 'flex' }}>
               {category.icon || category.name.charAt(0).toUpperCase()}
             </div>
-            <div className="category-name">{category.name}</div>
+            <div className="category-name text-responsive-base">{category.name}</div>
           </div>
         ))}
       </div>

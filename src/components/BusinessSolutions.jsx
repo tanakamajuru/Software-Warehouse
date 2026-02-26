@@ -15,10 +15,21 @@ const ChevronRightIcon = () => (
   </svg>
 );
 
-function BusinessSoftware() {
+function BusinessSolutions() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [businessProducts, setBusinessProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // Handle mobile detection
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     const fetchBusinessProducts = async () => {
@@ -93,24 +104,47 @@ function BusinessSoftware() {
   }
 
   return (
-    <div className="product-section">
-      <div className="section-header">
-        <h2 className="section-title">BUSINESS SOLUTIONS</h2>
-        <div className="section-nav">
-          <div className="nav-arrow"><ChevronLeftIcon /></div>
-          <div className="nav-arrow"><ChevronRightIcon /></div>
+    <div className="business-solutions-section">
+      {/* PC Layout - Preserve Original */}
+      {!isMobile ? (
+        <div className="product-section">
+          <div className="section-header">
+            <h2 className="section-title">BUSINESS SOLUTIONS</h2>
+            <div className="section-nav">
+              <div className="nav-arrow"><ChevronLeftIcon /></div>
+              <div className="nav-arrow"><ChevronRightIcon /></div>
+            </div>
+          </div>
+          <div className="product-grid-with-image">
+            {businessProducts.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+            <div className="large-product-image">
+              <div style={{fontSize: '48px', fontWeight: 800, color: '#1e40af'}}>BUSINESS SOLUTIONS</div>
+            </div>
+          </div>
         </div>
-      </div>
-      <div className="product-grid-with-image">
-        {businessProducts.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-        <div className="large-product-image">
-          <div style={{fontSize: '48px', fontWeight: 800, color: '#1e40af'}}>BUSINESS SOLUTIONS</div>
+      ) : (
+        /* Mobile Layout - New Responsive Design */
+        <div className="product-section container responsive-section">
+          <div className="section-header text-center">
+            <h2 className="section-title text-responsive-2xl">BUSINESS SOLUTIONS</h2>
+          </div>
+          <div className="product-grid-with-image grid">
+            {businessProducts.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+          <div className="business-solutions-banner responsive-card">
+            <div className="business-solutions-content">
+              <h3 className="text-responsive-xl">BUSINESS SOLUTIONS</h3>
+              <p className="text-responsive-base">Empowering your business with professional software tools</p>
+            </div>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
 
-export default BusinessSoftware;
+export default BusinessSolutions;

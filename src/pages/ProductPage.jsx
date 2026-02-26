@@ -24,7 +24,7 @@ const ProductPage = () => {
     
     setCheckingStock(true);
     try {
-      const response = await fetch(`http://localhost:5000/api/v1/inventory/check-availability/${productId}`, {
+      const response = await fetch(`https://engine.softwarewarehouse.co.zw/api/v1/inventory/check-availability/${productId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -325,7 +325,7 @@ const ProductPage = () => {
                 className="w-full h-96 object-cover"
               />
             </div>
-            {product.images && product.images.length > 0 && (
+            {product.images && Array.isArray(product.images) && product.images.length > 0 && (
               <div className="grid grid-cols-4 gap-2">
                 {product.images.map((image, index) => (
                   <button

@@ -15,7 +15,7 @@ const ChevronRightIcon = () => (
   </svg>
 );
 
-function SoftwareSolutions() {
+function SoftwareHardwareSection() {
   const [softwareProducts, setSoftwareProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -51,27 +51,25 @@ function SoftwareSolutions() {
 
   if (loading) {
     return (
-      <div className="software-banner">
-        <div className="banner-products">
-          <div className="section-header">
-            <h2 className="section-title">SOFTWARE SOLUTIONS</h2>
-            <div className="section-nav">
-              <div className="nav-arrow"><ChevronLeftIcon /></div>
-              <div className="nav-arrow"><ChevronRightIcon /></div>
-            </div>
+      <div className="product-section container">
+        <div className="section-header">
+          <h2 className="section-title text-responsive-2xl">Software & Hardware</h2>
+          <div className="section-nav">
+            <div className="nav-arrow"><ChevronLeftIcon /></div>
+            <div className="nav-arrow"><ChevronRightIcon /></div>
           </div>
-          <div className="software-product-grid">
-            {[...Array(3)].map((_, index) => (
-              <div key={index} className="product-card skeleton">
-                <div className="product-image skeleton-box"></div>
-                <div className="product-info">
-                  <div className="product-category skeleton-box"></div>
-                  <div className="product-name skeleton-box"></div>
-                  <div className="product-price skeleton-box"></div>
-                </div>
+        </div>
+        <div className="product-grid grid">
+          {[...Array(3)].map((_, index) => (
+            <div key={index} className="product-card skeleton">
+              <div className="product-image skeleton-box"></div>
+              <div className="product-info">
+                <div className="product-category skeleton-box"></div>
+                <div className="product-name skeleton-box"></div>
+                <div className="product-price skeleton-box"></div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
     );
@@ -79,36 +77,28 @@ function SoftwareSolutions() {
 
   if (error) {
     return (
-      <div className="software-banner">
-        <div className="banner-products">
-          <div className="section-header">
-            <h2 className="section-title">SOFTWARE SOLUTIONS</h2>
-          </div>
-          <div className="error-message">Failed to load software products: {error}</div>
-        </div>
+      <div className="product-section container">
+        <div className="error-message text-center">Failed to load software products: {error}</div>
       </div>
     );
   }
 
   return (
-    <div className="software-banner">
-      <div className="banner-image" />
-      <div className="banner-products">
-        <div className="section-header">
-          <h2 className="section-title">SOFTWARE SOLUTIONS</h2>
-          <div className="section-nav">
-            <div className="nav-arrow"><ChevronLeftIcon /></div>
-            <div className="nav-arrow"><ChevronRightIcon /></div>
-          </div>
+    <div className="product-section container">
+      <div className="section-header">
+        <h2 className="section-title text-responsive-2xl">Software & Hardware</h2>
+        <div className="section-nav">
+          <div className="nav-arrow"><ChevronLeftIcon /></div>
+          <div className="nav-arrow"><ChevronRightIcon /></div>
         </div>
-        <div className="software-product-grid">
-          {softwareProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
+      </div>
+      <div className="product-grid grid">
+        {softwareProducts.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
       </div>
     </div>
   );
 }
 
-export default SoftwareSolutions;
+export default SoftwareHardwareSection;

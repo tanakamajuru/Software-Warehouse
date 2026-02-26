@@ -205,7 +205,7 @@ function Shop() {
       {/* Header */}
       <div className="shop-header">
         <div className="shop-title">
-          <h1>Software Solutions Shop</h1>
+          <h1>SOFTWARE & HARDWARE SOLUTIONS Shop</h1>
           <p>Discover powerful software for Zimbabwean businesses</p>
         </div>
         <div className="shop-controls">

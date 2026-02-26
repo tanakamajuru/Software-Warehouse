@@ -61,17 +61,17 @@ function ProductSection({ categoryId, brandId, title = "FEATURED PRODUCTS" }) {
 
   if (loading) {
     return (
-      <div className="product-section">
+      <div className="product-section container responsive-section">
         <div className="section-header">
-          <h2 className="section-title">{title}</h2>
+          <h2 className="section-title text-responsive-2xl">{title}</h2>
           <div className="section-nav">
             <div className="nav-arrow"><ChevronLeftIcon /></div>
             <div className="nav-arrow"><ChevronRightIcon /></div>
           </div>
         </div>
-        <div className="product-grid">
+        <div className="product-grid grid">
           {[...Array(5)].map((_, index) => (
-            <div key={index} className="product-card skeleton">
+            <div key={index} className="product-card responsive-card skeleton">
               <div className="product-image skeleton-box"></div>
               <div className="product-info">
                 <div className="product-category skeleton-box"></div>
@@ -88,22 +88,22 @@ function ProductSection({ categoryId, brandId, title = "FEATURED PRODUCTS" }) {
 
   if (error) {
     return (
-      <div className="product-section">
-        <div className="error-message">Failed to load products: {error}</div>
+      <div className="product-section container responsive-section">
+        <div className="error-message text-center">Failed to load products: {error}</div>
       </div>
     );
   }
 
   return (
-    <div className="product-section">
+    <div className="product-section container responsive-section">
       <div className="section-header">
-        <h2 className="section-title">{title}</h2>
+        <h2 className="section-title text-responsive-2xl">{title}</h2>
         <div className="section-nav">
           <div className="nav-arrow"><ChevronLeftIcon /></div>
           <div className="nav-arrow"><ChevronRightIcon /></div>
         </div>
       </div>
-      <div className="product-grid">
+      <div className="product-grid grid">
         {products.map((product) => (
           <ProductCard key={product.id} product={product} categories={categories} />
         ))}

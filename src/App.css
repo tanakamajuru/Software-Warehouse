@@ -1,6 +1,7 @@
 @import './styles/skeleton.css';
 @import './styles/software-theme.css';
 @import './styles/shop.css';
+@import './styles/responsive.css';
 @import 'tailwindcss';
 
 /* Custom App Styles */
@@ -38,6 +39,25 @@
   gap: 40px;
 }
 
+/* Mobile responsive newsletter popup */
+@media (max-width: 767px) {
+  .newsletter-popup {
+    width: 95%;
+    max-width: 350px;
+    padding: 30px;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .newsletter-popup {
+    width: 90%;
+    max-width: 280px;
+    padding: 20px;
+  }
+}
+
 .popup-close {
   position: absolute;
   top: 20px;
@@ -55,10 +75,44 @@
   color: #6b7280;
 }
 
+/* Mobile responsive popup close button */
+@media (max-width: 767px) {
+  .popup-close {
+    width: 28px;
+    height: 28px;
+    top: 15px;
+    right: 15px;
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .popup-close {
+    width: 24px;
+    height: 24px;
+    top: 12px;
+    right: 12px;
+    font-size: 18px;
+  }
+}
+
 .popup-image {
   background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   border-radius: 12px;
   min-height: 400px;
+}
+
+/* Mobile responsive popup image */
+@media (max-width: 767px) {
+  .popup-image {
+    min-height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .popup-image {
+    min-height: 150px;
+  }
 }
 
 .popup-content {
@@ -80,16 +134,60 @@
   margin-bottom: 10px;
 }
 
+/* Mobile responsive popup title */
+@media (max-width: 767px) {
+  .popup-title {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .popup-title {
+    font-size: 20px;
+  }
+}
+
 .popup-subtitle {
   font-size: 14px;
   color: #6b7280;
   margin-bottom: 30px;
 }
 
+/* Mobile responsive popup subtitle */
+@media (max-width: 767px) {
+  .popup-subtitle {
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .popup-subtitle {
+    font-size: 12px;
+    margin-bottom: 15px;
+  }
+}
+
 .newsletter-input {
   display: flex;
   gap: 10px;
   margin-top: 20px;
+}
+
+/* Mobile responsive newsletter input */
+@media (max-width: 767px) {
+  .newsletter-input {
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .newsletter-input {
+    gap: 6px;
+    margin-top: 12px;
+  }
 }
 
 .input {
@@ -99,6 +197,21 @@
   background: white;
   border-radius: 8px;
   outline: none;
+}
+
+/* Mobile responsive input */
+@media (max-width: 767px) {
+  .input {
+    padding: 10px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .input {
+    padding: 8px;
+    font-size: 13px;
+  }
 }
 
 .subscribe-btn {
@@ -111,6 +224,21 @@
   font-weight: 600;
 }
 
+/* Mobile responsive subscribe button */
+@media (max-width: 767px) {
+  .subscribe-btn {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .subscribe-btn {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+}
+
 .checkbox-label {
   display: flex;
   align-items: center;
@@ -119,6 +247,23 @@
   font-size: 13px;
   color: #6b7280;
   margin-top: 20px;
+}
+
+/* Mobile responsive checkbox label */
+@media (max-width: 767px) {
+  .checkbox-label {
+    font-size: 12px;
+    margin-top: 15px;
+    gap: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .checkbox-label {
+    font-size: 11px;
+    margin-top: 12px;
+    gap: 4px;
+  }
 }
 
 /* Header Container */
@@ -1169,8 +1314,12 @@
     grid-template-columns: repeat(4, 1fr);
   }
   
-  .features-section {
-    grid-template-columns: repeat(2, 1fr);
+  .hero-section {
+    padding: 40px 0;
+  }
+  
+  .hero-title {
+    font-size: 2.5rem;
   }
 }
 
@@ -1178,65 +1327,133 @@
   .top-header {
     flex-direction: column;
     gap: 20px;
-    padding: 20px;
   }
   
-  .header-center {
-    flex-direction: column;
-    width: 100%;
-    margin: 0;
+  .hero-section {
+    padding: 30px 0;
   }
   
-  .trending-bar {
-    flex-direction: column;
-    padding: 20px;
+  .hero-title {
+    font-size: 2rem;
+    line-height: 1.2;
   }
   
-  .main-nav {
-    flex-direction: column;
-    padding: 20px;
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+  
+  .hero-btn {
+    padding: 12px 24px;
+    font-size: 0.9rem;
+  }
+  
+  .side-cards {
+    display: none;
+  }
+  
+  .newsletter-popup {
+    width: 95%;
+    padding: 24px;
+    grid-template-columns: 1fr;
+    gap: 24px;
   }
   
   /* Compact navigation on mobile */
   .compact-nav {
     padding: 8px 20px;
     flex-wrap: wrap;
-  }
-  
-  .compact-logo {
-    order: 1;
-    width: 100%;
-    justify-content: center;
-    margin-bottom: 10px;
+    height: auto;
+    min-height: 60px;
   }
   
   .compact-nav-links {
-    order: 2;
-    width: 100%;
-    justify-content: center;
-    margin: 10px 0;
-    flex-wrap: wrap;
-    gap: 15px;
+    display: none;
   }
   
-  .compact-actions {
-    order: 3;
-    width: 100%;
-    justify-content: center;
-    margin-top: 10px;
-    gap: 20px;
+  .mobile-menu-toggle {
+    display: block;
   }
   
   /* Adjust spacing for mobile fixed navbar */
   .compact-nav ~ * {
-    margin-top: 120px; /* Height of mobile compact navbar */
+    margin-top: 80px; /* Height of mobile compact navbar */
   }
   
   .hero-section {
-    grid-template-columns: 1fr;
     padding: 20px;
   }
   
+  .section-header {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  
+  .section-title {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .hero-title {
+    font-size: 1.75rem;
+  }
+  
+  .section-title {
+    font-size: 1.25rem;
+  }
+  
+  .newsletter-popup {
+    width: 90%;
+    padding: 20px;
+  }
+}
+
+/* Enhanced responsive utilities */
+.responsive-hero {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+@media (min-width: 768px) {
+  .responsive-hero {
+    min-height: 70vh;
+    padding: 60px 40px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .responsive-hero {
+    min-height: 80vh;
+    padding: 80px 60px;
+  }
+}
+
+.responsive-section {
+  padding: 40px 0;
+}
+
+@media (min-width: 768px) {
+  .responsive-section {
+    padding: 60px 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .responsive-section {
+    padding: 80px 0;
+  }
+}
+
+/* Mobile specific adjustments */
+@media (max-width: 767px) {
   .category-section {
     margin: 20px;
     padding: 40px 20px;
@@ -1249,6 +1466,11 @@
   }
   
   .promo-section {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+  
+  .product-section {
     grid-template-columns: 1fr;
     padding: 0 20px 40px;
   }

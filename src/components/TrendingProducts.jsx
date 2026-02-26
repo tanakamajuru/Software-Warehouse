@@ -39,14 +39,23 @@ function TrendingProducts() {
         ]);
         
         // Handle different response formats
-        const recentArray = Array.isArray(recentData) ? recentData : (recentData.data || []);
-        const topBoughtArray = Array.isArray(topBoughtData) ? topBoughtData : (topBoughtData.data || []);
-        const categoriesArray = Array.isArray(categoriesResponse) ? categoriesResponse : (categoriesResponse.data || []);
+        const extractArray = (data) => {
+          if (Array.isArray(data)) return data;
+          if (data?.data && Array.isArray(data.data)) return data.data;
+          if (data?.data?.data && Array.isArray(data.data.data)) return data.data.data;
+          if (data?.data?.products && Array.isArray(data.data.products)) return data.data.products;
+          if (data?.products && Array.isArray(data.products)) return data.products;
+          return [];
+        };
+        
+        const recentArray = extractArray(recentData);
+        const topBoughtArray = extractArray(topBoughtData);
+        const categoriesArray = extractArray(categoriesResponse);
         
         // Create category lookup map
         const categoryMap = {};
         categoriesArray.forEach(category => {
-          categoryMap[category.id] = category.name || category.slug || 'Unknown';
+          categoryMap[category._id || category.id] = category.name || category.slug || 'Unknown';
         });
         
         console.log('TrendingProducts - Category map:', categoryMap);
@@ -55,7 +64,7 @@ function TrendingProducts() {
         // Combine and deduplicate products
         const allProducts = [...recentArray, ...topBoughtArray];
         const uniqueProducts = allProducts.filter((product, index, self) =>
-          index === self.findIndex((p) => p.id === product.id)
+          index === self.findIndex((p) => (p.id || p._id) === (product.id || product._id))
         );
         
         console.log('Trending products:', uniqueProducts);
@@ -129,7 +138,7 @@ function TrendingProducts() {
         </div>
         <div className="no-results">
           <p>No trending products available at the moment.</p>
-          <p>Check back soon for the latest Processors, Graphics Cards, Storage, Memory & Peripherals!</p>
+          <p>Check back soon for the latest Products!</p>
         </div>
       </div>
     );

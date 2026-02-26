@@ -177,8 +177,8 @@ function Signup() {
         <div className="auth-branding">
           <div className="branding-content">
             <ZimbabweFlag />
-            <h1>Join Zimbabwe Software Solutions</h1>
-            <p>Create your account to access our comprehensive software solutions</p>
+            <h1>Join Zimbabwe SOFTWARE & HARDWARE SOLUTIONS</h1>
+            <p>Create your account to access our comprehensive SOFTWARE & HARDWARE SOLUTIONS</p>
             
             <div className="branding-features">
               <div className="feature-item">
@@ -389,7 +389,7 @@ function Signup() {
             <div className="signup-benefits">
               <h4>Why join us?</h4>
               <ul>
-                <li><CheckIcon /> Access to 50+ software solutions</li>
+                <li><CheckIcon /> Access to 50+ SOFTWARE & HARDWARE SOLUTIONS</li>
                 <li><CheckIcon /> Free trial for all products</li>
                 <li><CheckIcon /> Local Zimbabwean support</li>
                 <li><CheckIcon /> ZIMRA-compliant tools</li>

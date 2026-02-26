@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { CartProvider } from './contexts/CartContext';
+import { DesignSystemProvider } from './components/DesignSystem';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import CategoryCarousel from './components/CategoryCarousel';
@@ -9,9 +10,9 @@ import PolicySection from './components/PolicySection';
 import PromoGrid from './components/PromoGrid';
 import TrendingProducts from './components/TrendingProducts';
 import ProductSection from './components/ProductSection';
-import SoftwareSolutions from './components/AudioSection';
+import SoftwareHardwareSection from './components/SoftwareHardwareSection';
 import TestimonialSection from './components/TestimonialSection';
-import BusinessSoftware from './components/SmartWatchSection';
+import BusinessSolutions from './components/BusinessSolutions';
 import BlogSection from './components/BlogSection';
 import Footer from './components/Footer';
 import NewsletterPopup from './components/NewsletterPopup';
@@ -48,11 +49,12 @@ function App() {
   };
 
   return (
-    <AuthProvider>
-      <CartProvider>
-        <Router>
-          <div className="app">
-          <Routes>
+    <DesignSystemProvider>
+      <AuthProvider>
+        <CartProvider>
+          <Router>
+            <div className="app">
+            <Routes>
             <Route path="/auth/*" element={<AuthPage />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/shop" element={<ShopPage />} />
@@ -69,8 +71,8 @@ function App() {
                 <PromoGrid />
                 <TrendingProducts />
                 <ProductSection />
-                <SoftwareSolutions />
-                <BusinessSoftware />
+                <SoftwareHardwareSection />
+                <BusinessSolutions />
                 <BlogSection />
                 <TestimonialSection />
                 <Footer />
@@ -82,6 +84,7 @@ function App() {
       </Router>
     </CartProvider>
   </AuthProvider>
+  </DesignSystemProvider>
   );
 }
 

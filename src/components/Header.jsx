@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Settings, User, Shield } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { useCart } from '../contexts/CartContext';
 import CartContext from '../contexts/CartContext';
+import apiService from '../services/api';
 import CartDrawer from './CartDrawer';
 import { useNavigate } from 'react-router-dom';
 
@@ -122,7 +123,11 @@ function TopHeader({ onCartClick }) {
           <>
             <div 
               className="icon-btn" 
-              onClick={() => navigate('/admin')} 
+              onClick={() => {
+                console.log('Shield clicked, user:', user);
+                console.log('Navigating to /admin');
+                navigate('/admin');
+              }} 
               style={{cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #ccc', padding: '5px'}} 
               title="Admin Dashboard"
             >
@@ -161,18 +166,45 @@ function TopHeader({ onCartClick }) {
 
 // Trending Bar Component
 function TrendingBar() {
-  const trends = ['Audio Apps', 'Business Systems', 'Mobile Solutions', 'Smart Tools'];
-  
+  const [trendingProducts, setTrendingProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchTrendingProducts = async () => {
+      try {
+        const data = await apiService.getTopBoughtProducts();
+        const products = Array.isArray(data) ? data.slice(0, 4) : [];
+        setTrendingProducts(products);
+      } catch (error) {
+        console.error('Failed to fetch trending products:', error);
+        setTrendingProducts([]);
+      }
+    };
+
+    fetchTrendingProducts();
+  }, []);
+
   return (
     <div className="trending-bar">
       <div className="trending-label">
         <LightningIcon />
-        SEARCH TRENDING:
+          SEARCH TRENDING:
       </div>
       <div className="trending-links">
-        {trends.map((trend, index) => (
-          <a key={index} href="#" className="trending-link">{trend}</a>
-        ))}
+        {trendingProducts.length > 0 ? (
+          trendingProducts.map((product, index) => (
+            <a 
+              key={product.id} 
+              href={`/product/${product.id}`}
+              className="trending-link"
+            >
+              {product.title || product.name}
+            </a>
+          ))
+        ) : (
+          <span className="text-gray-400 text-xs">
+            No trending products
+          </span>
+        )}
       </div>
     </div>
   );

@@ -99,7 +99,7 @@ function Login() {
         <div className="auth-branding">
           <div className="branding-content">
             <ZimbabweFlag />
-            <h1>Zimbabwe Software Solutions</h1>
+            <h1>Zimbabwe SOFTWARE & HARDWARE SOLUTIONS</h1>
             <p>Empowering local businesses with cutting-edge digital solutions</p>
             
             <div className="branding-features">
@@ -133,7 +133,7 @@ function Login() {
           <div className="auth-form">
             <div className="auth-header">
               <h2>Welcome Back</h2>
-              <p>Sign in to your account to access our software solutions</p>
+              <p>Sign in to your account to access our SOFTWARE & HARDWARE SOLUTIONS</p>
             </div>
 
             {/* Success Message */}

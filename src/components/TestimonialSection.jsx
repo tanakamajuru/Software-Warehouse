@@ -13,8 +13,8 @@ function TestimonialSection() {
       name: 'Tendai Wenyika',
       location: 'From Harare',
       title: 'Excellent Business Software',
-      content: 'Zimbabwe Software Solutions transformed our accounting department. The ZIMRA-compliant software saved us hours of work and eliminated errors. Their local support team is always available when we need help.',
-      avatar: 'https://ecommax.risingbamboo.com/wp-content/uploads/2022/10/persion-2.png'
+      content: 'Zimbabwe SOFTWARE & HARDWARE SOLUTIONS transformed our accounting department. The ZIMRA-compliant software saved us hours of work and eliminated errors. Their local support team is always available when we need help.',
+      avatar: 'https://c.pxhere.com/images/3f/e4/9a1a903a1089c8ba2f8799663387-1451425.jpg!d'
     },
     {
       name: 'Chipo Musarurwa',
@@ -24,7 +24,7 @@ function TestimonialSection() {
       avatar: 'https://ecommax.risingbamboo.com/wp-content/uploads/2022/10/persion-4.png'
     },
     {
-      name: 'Farai Gondo',
+      name: 'Henry Ford ',
       location: 'From Mutare',
       title: 'Outstanding Educational Tools',
       content: 'Their educational software aligned with Zimbabwe curriculum has improved student performance at our school. Teachers find it easy to use and parents appreciate the detailed progress reports.',
@@ -33,24 +33,24 @@ function TestimonialSection() {
   ];
 
   return (
-    <div className="testimonial-section">
-      <div className="section-header">
-        <h2 className="section-title">What our customers say</h2>
-        <p className="section-subtitle">Trusted by Zimbabwean businesses nationwide</p>
+    <div className="testimonial-section container responsive-section">
+      <div className="section-header text-center">
+        <h2 className="section-title text-responsive-2xl">What our customers say</h2>
+        <p className="section-subtitle text-responsive-base">Trusted by Zimbabwean businesses nationwide</p>
       </div>
 
-      <div className="testimonial-grid">
+      <div className="testimonial-grid grid">
         {testimonials.map((testimonial, index) => (
-          <div key={index} className="testimonial-card">
+          <div key={index} className="testimonial-card responsive-card">
             <div className="testimonial-header">
-              <img src={testimonial.avatar} alt={testimonial.name} className="testimonial-avatar" />
+              <img src={testimonial.avatar} alt={testimonial.name} className="testimonial-avatar responsive-image" />
               <div className="testimonial-info">
-                <h3 className="testimonial-name">{testimonial.name}</h3>
-                <p className="testimonial-location">{testimonial.location}</p>
+                <h3 className="testimonial-name text-responsive-lg">{testimonial.name}</h3>
+                <p className="testimonial-location text-responsive-base">{testimonial.location}</p>
               </div>
             </div>
 
-            <h4 className="testimonial-title">{testimonial.title}</h4>
+            <h4 className="testimonial-title text-responsive-base">{testimonial.title}</h4>
 
             <div className="testimonial-rating">
               {[...Array(5)].map((_, i) => (
@@ -58,7 +58,7 @@ function TestimonialSection() {
               ))}
             </div>
 
-            <p className="testimonial-content">{testimonial.content}</p>
+            <p className="testimonial-content text-responsive-base">{testimonial.content}</p>
           </div>
         ))}
       </div>

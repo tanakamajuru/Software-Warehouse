@@ -1,4 +1,6 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://api.ecommerce.com/api/v1';
+//const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://api.ecommerce.com/api/v1';
+
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://engine.softwarewarehouse.co.zw/api/v1';
 
 class ApiService {
   // Auth helper methods
@@ -20,14 +22,40 @@ class ApiService {
     return !!this.getToken();
   }
 
+  // Helper method to convert relative image URLs to full URLs
+  getImageUrl(imagePath) {
+    if (!imagePath) return '';
+    
+    // If already a full URL, return as is
+    if (imagePath.startsWith('http')) {
+      return imagePath;
+    }
+    
+    // Remove leading slash and construct full URL
+    const cleanPath = imagePath.startsWith('/') ? imagePath.slice(1) : imagePath;
+    const baseUrl = API_BASE_URL.replace('/api/v1', '');
+    
+    // If path already includes 'uploads/', just prepend base URL
+    if (cleanPath.startsWith('uploads/')) {
+      return `${baseUrl}${baseUrl.endsWith('/') ? '' : '/'}${cleanPath}`;
+    }
+    
+    // Otherwise, assume it's in uploads directory
+    return `${baseUrl}${baseUrl.endsWith('/') ? '' : '/'}uploads/${cleanPath}`;
+  }
+
   async request(endpoint, options = {}) {
     const url = `${API_BASE_URL}${endpoint}`;
     const token = this.getToken();
     
+    // Handle FormData (file uploads)
+    const isFormData = options.body instanceof FormData;
+    
     const config = {
       headers: {
-        'Content-Type': 'application/json',
         ...(token && { 'Authorization': `Bearer ${token}` }),
+        // Don't set Content-Type for FormData - browser sets it with boundary
+        ...(!isFormData && { 'Content-Type': 'application/json' }),
         ...options.headers,
       },
       ...options,
@@ -42,16 +70,130 @@ class ApiService {
       
       const result = await response.json();
       
-      // Handle the wrapped response structure
-      if (!result.success) {
+      // Handle wrapped response structure
+      if (result.success === false) {
         throw new Error(result.message || 'API request failed');
       }
       
-      return result.data;
+      // Process image URLs and fix stringified arrays in the response data
+      const processedData = this.processImageUrlsAndArrays(result.data);
+      
+      return processedData;
     } catch (error) {
       console.error('API request failed:', error);
       throw error;
     }
+  }
+
+  // Helper method to process image URLs and fix stringified arrays in API response data
+  processImageUrlsAndArrays(data) {
+    if (!data) return data;
+    
+    // Handle different data structures
+    const processItem = (item) => {
+      if (!item) return item;
+      
+      // Process image field
+      if (item.image) {
+        item.image = this.getImageUrl(item.image);
+      }
+      
+      // Process imageCover field
+      if (item.imageCover) {
+        const originalImageCover = item.imageCover;
+        item.imageCover = this.getImageUrl(item.imageCover);
+        console.log('Image processing:', {
+          original: originalImageCover,
+          processed: item.imageCover
+        });
+      }
+      
+      // Process images array - handle stringified JSON
+      if (item.images) {
+        if (typeof item.images === 'string') {
+          try {
+            const parsedImages = JSON.parse(item.images);
+            console.log('Parsed images array:', parsedImages);
+            item.images = parsedImages;
+          } catch (e) {
+            console.warn('Failed to parse images JSON:', item.images);
+            item.images = [];
+          }
+        }
+        // Process image URLs in the array
+        if (Array.isArray(item.images)) {
+          item.images = item.images.map(img => {
+            const processedImg = this.getImageUrl(img);
+            console.log('Processing image in array:', {
+              original: img,
+              processed: processedImg
+            });
+            return processedImg;
+          });
+        }
+      }
+      
+      return item;
+    };
+    
+    // Handle arrays of items
+    if (Array.isArray(data)) {
+      return data.map(processItem);
+    }
+    
+    // Handle paginated response
+    if (data.data && Array.isArray(data.data)) {
+      return {
+        ...data,
+        data: data.data.map(processItem)
+      };
+    }
+    
+    // Handle single item
+    return processItem(data);
+  }
+
+  // Helper method to process image URLs in API response data
+  processImageUrls(data) {
+    if (!data) return data;
+    
+    // Handle different data structures
+    const processItem = (item) => {
+      if (!item) return item;
+      
+      // Process image field
+      if (item.image) {
+        item.image = this.getImageUrl(item.image);
+      }
+      
+      // Process imageCover field
+      if (item.imageCover) {
+        item.imageCover = this.getImageUrl(item.imageCover);
+      }
+      
+      // Process nested images array
+      if (item.images && Array.isArray(item.images)) {
+        item.images = item.images.map(img => this.getImageUrl(img));
+      }
+      
+      return item;
+    };
+    
+    // Handle arrays of items
+    if (Array.isArray(data)) {
+      return data.map(processItem);
+    }
+    
+    // Handle paginated response
+    if (data.data && Array.isArray(data.data)) {
+      return {
+        ...data,
+        data: data.data.map(processItem)
+      };
+    }
+    
+    // Handle single item
+    return processItem(data);
   }
 
   // User Management (Admin only)
@@ -92,7 +234,14 @@ class ApiService {
 
   // Categories
   async getCategories() {
-    return this.request('/categories');
+    const response = await this.request('/categories');
+    // Handle different response structures
+    if (response.data && Array.isArray(response.data)) {
+      return response.data;
+    } else if (Array.isArray(response)) {
+      return response;
+    }
+    return response.data || response;
   }
 
   async getCategoryById(id) {
@@ -102,14 +251,14 @@ class ApiService {
   async createCategory(categoryData) {
     return this.request('/categories', {
       method: 'POST',
-      body: JSON.stringify(categoryData),
+      body: categoryData, // Expect FormData for file uploads
     });
   }
 
   async updateCategory(id, categoryData) {
     return this.request(`/categories/${id}`, {
       method: 'PUT',
-      body: JSON.stringify(categoryData),
+      body: categoryData, // Expect FormData for file uploads
     });
   }
 
@@ -156,7 +305,14 @@ class ApiService {
   async getProducts(params = {}) {
     const queryString = new URLSearchParams(params).toString();
     const response = await this.request(`/products${queryString ? `?${queryString}` : ''}`);
-    // Handle paginated response - return the data array
+    // Handle different response structures
+    if (response.data && Array.isArray(response.data)) {
+      return response.data;
+    } else if (Array.isArray(response)) {
+      return response;
+    } else if (response.data && response.data.data && Array.isArray(response.data.data)) {
+      return response.data.data;
+    }
     return response.data || response;
   }
 
@@ -167,14 +323,14 @@ class ApiService {
   async createProduct(productData) {
     return this.request('/products', {
       method: 'POST',
-      body: JSON.stringify(productData),
+      body: productData, // Expect FormData for file uploads
     });
   }
 
   async updateProduct(id, productData) {
     return this.request(`/products/${id}`, {
       method: 'PUT',
-      body: JSON.stringify(productData),
+      body: productData, // Expect FormData for file uploads
     });
   }
 
@@ -186,7 +342,14 @@ class ApiService {
 
   // Brands
   async getBrands() {
-    return this.request('/brands');
+    const response = await this.request('/brands');
+    // Handle different response structures
+    if (response.data && Array.isArray(response.data)) {
+      return response.data;
+    } else if (Array.isArray(response)) {
+      return response;
+    }
+    return response.data || response;
   }
 
   async getBrandById(id) {
@@ -196,14 +359,14 @@ class ApiService {
   async createBrand(brandData) {
     return this.request('/brands', {
       method: 'POST',
-      body: JSON.stringify(brandData),
+      body: brandData, // Expect FormData for file uploads
     });
   }
 
   async updateBrand(id, brandData) {
     return this.request(`/brands/${id}`, {
       method: 'PUT',
-      body: JSON.stringify(brandData),
+      body: brandData, // Expect FormData for file uploads
     });
   }
 
@@ -221,6 +384,7 @@ class ApiService {
   async checkProductAvailability(productId) {
     return this.request(`/inventory/check-availability/${productId}`, {
       method: 'POST',
+      body: JSON.stringify({ quantity: 1 })
     });
   }
 
@@ -237,7 +401,14 @@ class ApiService {
 
   // Banners
   async getBanners() {
-    return this.request('/banners');
+    const response = await this.request('/banners');
+    // Handle different response structures
+    if (response.data && Array.isArray(response.data)) {
+      return response.data;
+    } else if (Array.isArray(response)) {
+      return response;
+    }
+    return response.data || response;
   }
 
   async createBanner(bannerData) {
@@ -263,11 +434,22 @@ class ApiService {
   async reorderBanners(bannerOrder) {
     return this.request('/banners/reorder', {
       method: 'POST',
-      body: JSON.stringify({ bannerOrder }),
+      body: JSON.stringify({ banners: bannerOrder }),
     });
   }
 
   // Discounts
+  async getDiscounts() {
+    const response = await this.request('/discounts');
+    // Handle different response structures
+    if (response.data && Array.isArray(response.data)) {
+      return response.data;
+    } else if (Array.isArray(response)) {
+      return response;
+    }
+    return response.data || response;
+  }
+
   async getTopDiscounts() {
     return this.request('/discounts/top');
   }
@@ -294,16 +476,17 @@ class ApiService {
 
   // Featured Products
   async getRecentProducts() {
-    return this.request('/featured/recent');
+    // Fallback to regular products with limit since featured endpoint doesn't exist
+    return this.request('/products?limit=8');
   }
 
   async getLowStockFeatured() {
-    // Since low stock endpoint doesn't exist in your API, return empty array
-    return [];
+    return this.request('/inventory/low-stock');
   }
 
   async getTopBoughtProducts() {
-    return this.request('/featured/top-bought');
+    // Fallback to regular products with limit since featured endpoint doesn't exist
+    return this.request('/products?limit=8');
   }
 
   // Authentication

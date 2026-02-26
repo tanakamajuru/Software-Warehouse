@@ -237,3 +237,81 @@
     font-size: 14px;
   }
 }
+
+/* Modern Responsive Enhancements */
+.responsive-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: white;
+  box-shadow: var(--shadow-sm);
+}
+
+.responsive-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.responsive-image {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.responsive-btn {
+  padding: 8px 16px;
+  font-size: 0.875rem;
+  border-radius: var(--radius-md);
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+
+/* Mobile Responsive */
+@media (max-width: 767px) {
+  .responsive-card {
+    border-radius: var(--radius-md);
+  }
+  
+  .responsive-image {
+    height: 200px;
+  }
+  
+  .responsive-btn {
+    padding: 12px 16px;
+    font-size: 0.875rem;
+    width: 100%;
+    margin-bottom: 8px;
+  }
+  
+  .product-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+/* Tablet Responsive */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .responsive-image {
+    height: 220px;
+  }
+  
+  .responsive-btn {
+    padding: 10px 16px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Desktop Responsive */
+@media (min-width: 1024px) {
+  .responsive-image {
+    height: 250px;
+  }
+  
+  .responsive-btn {
+    padding: 8px 16px;
+    font-size: 0.875rem;
+  }
+}

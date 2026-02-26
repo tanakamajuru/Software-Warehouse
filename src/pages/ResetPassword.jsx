@@ -227,7 +227,7 @@ function ResetPassword() {
                 <div className="feature-icon">✅</div>
                 <div className="feature-text">
                   <h3>Quick Access</h3>
-                  <p>Get back to your software solutions immediately</p>
+                  <p>Get back to your SOFTWARE & HARDWARE SOLUTIONS immediately</p>
                 </div>
               </div>
             </div>

@@ -1,10 +1,31 @@
 import { Search, Heart, GitCompare, ShoppingBag, Settings, Menu, DollarSign, User, LogOut } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
+import { useState, useEffect } from 'react'
+import apiService from '../services/api'
 
 const Navbar = () => {
   const navigate = useNavigate()
   const { user, logout } = useAuth()
+  const [topBoughtProducts, setTopBoughtProducts] = useState([])
+
+  useEffect(() => {
+    const fetchTopBought = async () => {
+      try {
+        console.log('Navbar: Fetching top bought products...');
+        const data = await apiService.getTopBoughtProducts()
+        console.log('Navbar: API response:', data);
+        const products = Array.isArray(data) ? data.slice(0, 4) : []
+        console.log('Navbar: Processed products:', products);
+        setTopBoughtProducts(products)
+      } catch (error) {
+        console.error('Failed to fetch top bought products:', error)
+        setTopBoughtProducts([])
+      }
+    }
+
+    fetchTopBought()
+  }, [])
 
   const handleAuthClick = () => {
     if (user) {
@@ -35,7 +56,7 @@ const Navbar = () => {
           <div className="flex-1 max-w-2xl mx-8">
             <div className="flex items-center space-x-4">
               {/* Shop Now Button */}
-              <button className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">
+              <button className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors" onClick={() => navigate('/shop')}>
                 <Menu className="h-4 w-4" />
                 <span>Shop Now</span>
               </button>
@@ -55,10 +76,23 @@ const Navbar = () => {
                 <div className="mt-2 text-sm text-gray-600">
                   <span className="font-medium">SEARCH TRENDING:</span>
                   <span className="ml-2 space-x-4">
-                    <a href="#" className="hover:text-blue-600 transition-colors">Audio Apps</a>
-                    <a href="#" className="hover:text-blue-600 transition-colors">Business Systems</a>
-                    <a href="#" className="hover:text-blue-600 transition-colors">Mobile Solutions</a>
-                    <a href="#" className="hover:text-blue-600 transition-colors">Smart Tools</a>
+                    {/* Debug: Show current state */}
+                    {console.log('Current topBoughtProducts:', topBoughtProducts)}
+                    {topBoughtProducts.length > 0 ? (
+                      topBoughtProducts.map((product, index) => (
+                        <a 
+                          key={product.id} 
+                          href={`/product/${product.id}`}
+                          className="hover:text-blue-600 transition-colors"
+                        >
+                          {product.title || product.name}
+                        </a>
+                      ))
+                    ) : (
+                      <span className="text-gray-400 text-xs">
+                        No products loaded
+                      </span>
+                    )}
                   </span>
                 </div>
               </div>

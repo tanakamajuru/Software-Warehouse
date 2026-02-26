@@ -104,7 +104,7 @@ function ForgotPassword() {
                   <h4>Next Steps:</h4>
                   <ol>
                     <li>Open your email inbox</li>
-                    <li>Find the reset code from Zimbabwe Software Solutions</li>
+                    <li>Find the reset code from Zimbabwe SOFTWARE & HARDWARE SOLUTIONS</li>
                     <li>Click the link or visit the reset page</li>
                     <li>Enter the code and your new password</li>
                   </ol>
@@ -128,7 +128,7 @@ function ForgotPassword() {
                 <h3>What's Next?</h3>
                 <ul>
                   <li>Check your email inbox (and spam folder)</li>
-                  <li>Look for an email from Zimbabwe Software Solutions</li>
+                  <li>Look for an email from Zimbabwe SOFTWARE & HARDWARE SOLUTIONS</li>
                   <li>Use the 6-digit code to reset your password</li>
                   <li>The code will expire in 15 minutes for security</li>
                 </ul>
@@ -196,7 +196,7 @@ function ForgotPassword() {
           <div className="branding-content">
             <ZimbabweFlag />
             <h1>Forgot Password?</h1>
-            <p>No worries! We'll help you reset your password and get back to accessing your software solutions</p>
+            <p>No worries! We'll help you reset your password and get back to accessing your SOFTWARE & HARDWARE SOLUTIONS</p>
             
             <div className="branding-features">
               <div className="feature-item">

@@ -65,7 +65,7 @@ function ProductCard({ product, categories = {} }) {
 
   return (
     <div 
-      className={`product-card responsive-card ${isHovered ? 'hovered' : ''}`}
+      className={`product-card ${isHovered ? 'hovered' : ''}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={handleProductClick}
@@ -74,7 +74,7 @@ function ProductCard({ product, categories = {} }) {
         <img
           src={product.imageCover || product.image || 'https://via.placeholder.com/300x300'}
           alt={product.title || product.name}
-          className="product-image responsive-image"
+          className="product-image"
           loading="lazy"
         />
         
@@ -82,13 +82,13 @@ function ProductCard({ product, categories = {} }) {
         {isHovered && (
           <div className="product-actions">
             <button 
-              className="add-to-cart-btn btn btn-primary responsive-btn"
+              className="add-to-cart-btn"
               onClick={handleAddToCart}
               disabled={!stockInfo.isAvailable}
             >
               {stockInfo.isAvailable ? 'Add to Cart' : 'Out of Stock'}
             </button>
-            <button className="quick-view-btn btn btn-secondary responsive-btn">
+            <button className="quick-view-btn">
               Quick View
             </button>
           </div>
