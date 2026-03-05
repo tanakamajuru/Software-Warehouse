@@ -389,7 +389,7 @@ export function DesignSystemProvider({ children }) {
       <style>{`
         * { box-sizing: border-box }
         ${TOKENS}
-        body { margin:0; font-family: 'Inter', system-ui, sans-serif }
+        body { margin:0; font-family: 'Bai Jamjuree', 'Inter', system-ui, sans-serif }
         a { color: inherit }
         button { font-family: inherit }
         input { font-family: inherit }

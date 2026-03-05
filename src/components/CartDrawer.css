@@ -11,7 +11,7 @@
   transition: right 0.3s ease;
   display: flex;
   flex-direction: column;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Bai Jamjuree', sans-serif;
 }
 
 .cart-drawer.open {
@@ -356,7 +356,7 @@
   background: #fff;
   border: none;
   border-bottom: 1px solid #eee;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Bai Jamjuree', sans-serif;
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 1px;
@@ -377,7 +377,7 @@
   padding: 16px;
   background: #3b9fe8;
   border: none;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Bai Jamjuree', sans-serif;
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 1.5px;
@@ -399,7 +399,7 @@
   background: #fff;
   border: none;
   border-bottom: 1px solid #eee;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Bai Jamjuree', sans-serif;
   font-size: 12px;
   font-weight: 500;
   color: #666;

@@ -140,14 +140,14 @@ function Hero() {
                 <div className="hero-tag">{mainBanner.title || 'FEATURED'}</div>
                 <h1 className="hero-title">{mainBanner.title || mainBanner.subtitle}</h1>
                 <p className="hero-subtitle">{mainBanner.description || mainBanner.content}</p>
-                <button className="hero-btn" onClick={() => mainBanner.link && window.open(mainBanner.link)}>EXPLORE SOLUTIONS</button>
+                <button className="hero-btn" onClick={() => mainBanner.link && window.open(mainBanner.link)}>SHOP NOW</button>
               </div>
             ) : (
               <div className="hero-content">
-                <div className="hero-tag">ZIMBABWE SOFTWARE</div>
+                {/* <div className="hero-tag">ZIMBABWE SOFTWARE</div> */}
                 <h1 className="hero-title">Digital Solutions for Zimbabwean Businesses</h1>
                 <p className="hero-subtitle">Empowering local businesses with cutting-edge software and hardware solutions</p>
-                <button className="hero-btn">EXPLORE SOLUTIONS</button>
+                <button className="hero-btn" style={{margin: '30px 0 100px 0', alignSelf: 'flex-start'}}>SHOP NOW</button>
               </div>
             )}
             
@@ -218,14 +218,14 @@ function Hero() {
                 <div className="hero-tag">{mainBanner.title || 'FEATURED'}</div>
                 <h1 className="hero-title text-responsive-3xl">{mainBanner.title || mainBanner.subtitle}</h1>
                 <p className="hero-subtitle text-responsive-base">{mainBanner.description || mainBanner.content}</p>
-                <button className="hero-btn btn btn-primary responsive-btn" onClick={() => mainBanner.link && window.open(mainBanner.link)}>EXPLORE SOLUTIONS</button>
+                <button className="hero-btn btn btn-primary responsive-btn" onClick={() => mainBanner.link && window.open(mainBanner.link)}>SHOP NOW</button>
               </div>
             ) : (
-              <div className="hero-content">
+              <div className="hero-content" style={{paddingBottom: '80px'}}>
                 <div className="hero-tag">ZIMBABWE SOFTWARE</div>
                 <h1 className="hero-title text-responsive-3xl">Digital Solutions for Zimbabwean Businesses</h1>
                 <p className="hero-subtitle text-responsive-base">Empowering local businesses with cutting-edge software and hardware solutions</p>
-                <button className="hero-btn btn btn-primary responsive-btn">EXPLORE SOLUTIONS</button>
+                <button className="hero-btn btn btn-primary responsive-btn" style={{margin: '30px 0 60px 0', alignSelf: 'flex-start'}}>Shop Now</button>
               </div>
             )}
             

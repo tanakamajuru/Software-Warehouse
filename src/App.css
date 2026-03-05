@@ -6,9 +6,19 @@
 
 /* Custom App Styles */
 .app {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'Bai Jamjuree', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   background: #fff;
   overflow-x: hidden;
+}
+
+/* Scrollbar hide utility */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */
 }
 
 /* Popup Styles */
@@ -19,6 +29,8 @@
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
   z-index: 9999;
 }
 
@@ -34,8 +46,7 @@
   width: 90%;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   z-index: 10000;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
   gap: 40px;
 }
 
@@ -45,8 +56,19 @@
     width: 95%;
     max-width: 350px;
     padding: 30px;
-    grid-template-columns: 1fr;
+    flex-direction: column;
     gap: 20px;
+  }
+  
+  .popup-image {
+    margin: 0;
+    padding: 0;
+    height: 200px;
+    flex: none;
+  }
+  
+  .popup-content {
+    flex: none;
   }
 }
 
@@ -55,6 +77,10 @@
     width: 90%;
     max-width: 280px;
     padding: 20px;
+  }
+  
+  .popup-image {
+    height: 150px;
   }
 }
 
@@ -97,9 +123,23 @@
 }
 
 .popup-image {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-  border-radius: 12px;
-  min-height: 400px;
+  background: transparent;
+  border-radius: 5px;
+  height: 100%;
+  margin: -60px 0 -60px -60px;
+  padding-right: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex: 1.2;
+}
+
+.popup-image-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 5px;
 }
 
 /* Mobile responsive popup image */
@@ -119,13 +159,17 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  flex: 0.8;
 }
 
 .popup-tag {
-  color: #0ea5e9;
+  color: #6b7280;
   font-size: 14px;
   font-weight: 600;
   margin-bottom: 10px;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
 }
 
 .popup-title {
@@ -174,6 +218,37 @@
   margin-top: 20px;
 }
 
+.input-with-button {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.input-with-button .input {
+  width: 100%;
+  padding-right: 120px;
+}
+
+.input-with-button .subscribe-btn {
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  bottom: 4px;
+  height: auto;
+  padding: 0 16px;
+  background: #374151;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* Mobile responsive newsletter input */
 @media (max-width: 767px) {
   .newsletter-input {
@@ -181,12 +256,34 @@
     gap: 8px;
     margin-top: 15px;
   }
+  
+  .input-with-button .input {
+    padding-right: 100px;
+  }
+  
+  .input-with-button .subscribe-btn {
+    top: 3px;
+    bottom: 3px;
+    padding: 0 12px;
+    font-size: 13px;
+  }
 }
 
 @media (max-width: 480px) {
   .newsletter-input {
     gap: 6px;
     margin-top: 12px;
+  }
+  
+  .input-with-button .input {
+    padding-right: 90px;
+  }
+  
+  .input-with-button .subscribe-btn {
+    top: 2px;
+    bottom: 2px;
+    padding: 0 10px;
+    font-size: 12px;
   }
 }
 
@@ -216,7 +313,7 @@
 
 .subscribe-btn {
   padding: 12px 24px;
-  background: #0ea5e9;
+  background: #374151;
   color: white;
   border: none;
   border-radius: 8px;
@@ -648,14 +745,20 @@
   position: relative;
   z-index: 1;
   max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .hero-tag {
-  color: #fff;
+  color: #6b7280;
   font-size: 14px;
   font-weight: 600;
   letter-spacing: 2px;
   margin-bottom: 15px;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
 }
 
 .hero-title {
@@ -701,6 +804,7 @@
   align-items: center;
   gap: 20px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  margin-top: 80px;
 }
 
 .slider-arrow {
@@ -947,6 +1051,7 @@
   font-size: 32px;
   font-weight: 800;
   color: #1f2937;
+  text-align: center;
 }
 
 .section-nav {

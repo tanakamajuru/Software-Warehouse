@@ -519,11 +519,11 @@ const ProductPage = () => {
       {relatedProducts.length > 0 && (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <h2 className="text-2xl font-bold text-gray-900 mb-8">Related Products</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="flex overflow-x-auto space-x-4 pb-4 scrollbar-hide">
             {relatedProducts.map((relatedProduct) => (
               <div 
                 key={relatedProduct.id}
-                className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow"
+                className="flex-shrink-0 w-72 bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow"
                 onClick={() => navigate(`/product/${relatedProduct.slug}`)}
               >
                 {/* Product Image */}

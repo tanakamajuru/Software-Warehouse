@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useSearchParams, useNavigate } from 'react-router-dom';
-import {
+import { Link, useSearchParams, useNavigate } from 'react-router-dom';
+import { 
   Laptop,
   Package,
   Star,
@@ -11,7 +11,6 @@ import {
   List,
   Clock
 } from 'lucide-react';
-import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ProductCard from '../components/ProductCard';
 import ApiService from '../services/api';
@@ -171,11 +170,9 @@ const ShopPage = () => {
 
   return (
     <div>
-      <Header />
-      
       {/* PC Layout - Preserve Original */}
       {!isMobile ? (
-        <div style={{ fontFamily: "'Segoe UI', sans-serif", fontSize: 14, color: "#333", background: "#fff" }}>
+        <div style={{ fontFamily: "'Bai Jamjuree', sans-serif", fontSize: 14, color: "#333", background: "#fff" }}>
           {/* Hero Section */}
           <div style={{ background: "linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)", padding: "40px 20px", textAlign: "center", position: "relative", overflow: "hidden" }}>
             <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, opacity: 0.05, backgroundImage: "radial-gradient(circle at 20% 50%, #27ae60 0%, transparent 50%), radial-gradient(circle at 80% 50%, #3498db 0%, transparent 50%)" }} />

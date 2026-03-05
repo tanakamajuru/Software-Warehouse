@@ -5,7 +5,11 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ['Bai Jamjuree', 'system-ui', 'sans-serif'],
+      },
+    },
   },
   plugins: [],
   corePlugins: {

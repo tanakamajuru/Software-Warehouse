@@ -8,7 +8,13 @@ function NewsletterPopup({ show, onClose }) {
       <div className="popup-overlay" onClick={onClose} />
       <div className="newsletter-popup">
         <button className="popup-close" onClick={onClose}>×</button>
-        <div className="popup-image" />
+        <div className="popup-image">
+          <img 
+            src="/images/newsletter-popup.jpg" 
+            alt="Newsletter Promotion" 
+            className="popup-image-img"
+          />
+        </div>
         <div className="popup-content">
           <div className="popup-tag">Sign up Newsletter</div>
           <div className="popup-title">GET 10% DISCOUNT</div>
@@ -16,8 +22,10 @@ function NewsletterPopup({ show, onClose }) {
             Sign up for newsletter to receive special offers and exclusive news about products
           </div>
           <div className="newsletter-input">
-            <input type="email" placeholder="ENTER YOUR EMAIL" className="input" />
-            <button className="subscribe-btn">Subscribe</button>
+            <div className="input-with-button">
+              <input type="email" placeholder="ENTER YOUR EMAIL" className="input" />
+              <button className="subscribe-btn">Subscribe</button>
+            </div>
           </div>
           <label className="checkbox-label">
             <input type="checkbox" onChange={onClose} />

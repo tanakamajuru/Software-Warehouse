@@ -36,7 +36,7 @@ function TestimonialSection() {
     <div className="testimonial-section container responsive-section">
       <div className="section-header text-center">
         <h2 className="section-title text-responsive-2xl">What our customers say</h2>
-        <p className="section-subtitle text-responsive-base">Trusted by Zimbabwean businesses nationwide</p>
+        {/* <p className="section-subtitle text-responsive-base">Trusted by Zimbabwean businesses nationwide</p> */}
       </div>
 
       <div className="testimonial-grid grid">

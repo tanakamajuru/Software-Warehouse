@@ -54,37 +54,57 @@ function App() {
         <CartProvider>
           <Router>
             <div className="app">
-            <Routes>
-            <Route path="/auth/*" element={<AuthPage />} />
-            <Route path="/admin" element={<Admin />} />
-            <Route path="/shop" element={<ShopPage />} />
-            <Route path="/products" element={<ProductPage />} />
-            <Route path="/product/:slug" element={<ProductPage />} />
-            <Route path="/checkout" element={<CheckoutPage />} />
-            <Route path="/*" element={
-              <>
-                <NewsletterPopup show={showPopup} onClose={() => setShowPopup(false)} />
-                <Header isScrolled={isNavScrolled} />
-                <Hero />
-                <CategoryCarousel />
-                <PolicySection />
-                <PromoGrid />
-                <TrendingProducts />
-                <ProductSection />
-                <SoftwareHardwareSection />
-                <BusinessSolutions />
-                <BlogSection />
-                <TestimonialSection />
-                <Footer />
-                <ScrollTopButton onClick={scrollToTop} />
-              </>
-            } />
-          </Routes>
-        </div>
-      </Router>
-    </CartProvider>
-  </AuthProvider>
-  </DesignSystemProvider>
+              <Routes>
+                <Route path="/auth/*" element={<AuthPage />} />
+                <Route path="/admin" element={<Admin />} />
+                <Route path="/shop" element={
+                  <>
+                    <Header isScrolled={isNavScrolled} />
+                    <ShopPage />
+                  </>
+                } />
+                <Route path="/products" element={
+                  <>
+                    <Header isScrolled={isNavScrolled} />
+                    <ProductPage />
+                  </>
+                } />
+                <Route path="/product/:slug" element={
+                  <>
+                    <Header isScrolled={isNavScrolled} />
+                    <ProductPage />
+                  </>
+                } />
+                <Route path="/checkout" element={
+                  <>
+                    <Header isScrolled={isNavScrolled} />
+                    <CheckoutPage />
+                  </>
+                } />
+                <Route path="/*" element={
+                  <>
+                    <NewsletterPopup show={showPopup} onClose={() => setShowPopup(false)} />
+                    <Header isScrolled={isNavScrolled} />
+                    <Hero />
+                    <CategoryCarousel />
+                    <PolicySection />
+                    <PromoGrid />
+                    <TrendingProducts />
+                    <ProductSection />
+                    <SoftwareHardwareSection />
+                    <BusinessSolutions />
+                    <BlogSection />
+                    <TestimonialSection />
+                    <Footer />
+                    <ScrollTopButton onClick={scrollToTop} />
+                  </>
+                } />
+              </Routes>
+            </div>
+          </Router>
+        </CartProvider>
+      </AuthProvider>
+    </DesignSystemProvider>
   );
 }
 

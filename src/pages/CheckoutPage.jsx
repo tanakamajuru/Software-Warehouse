@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
-import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
@@ -10,11 +9,7 @@ import { Checkbox } from '../components/ui/checkbox';
 import { Textarea } from '../components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 
-// Add Poppins font
-const link = document.createElement('link');
-link.href = 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap';
-link.rel = 'stylesheet';
-document.head.appendChild(link);
+// Bai Jamjuree font is already imported in index.html
 
 const CheckoutPage = () => {
   const navigate = useNavigate();
@@ -78,8 +73,6 @@ const CheckoutPage = () => {
 
   return (
     <div className="checkout-page">
-      <Header />
-      
       {/* HERO BANNER */}
       <div className="hero-banner">
         <div className="hero-content">
@@ -396,7 +389,7 @@ const CheckoutPage = () => {
 
       <style jsx>{`
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Poppins', sans-serif; font-size: 13px; color: #333; background: #fff; }
+        body { font-family: 'Bai Jamjuree', sans-serif; font-size: 13px; color: #333; background: #fff; }
         a { text-decoration: none; color: inherit; }
 
         /* ========== HERO BANNER ========== */
@@ -496,7 +489,7 @@ const CheckoutPage = () => {
           border: 1px solid #ddd;
           border-radius: 4px;
           font-size: 13px;
-          font-family: 'Poppins', sans-serif;
+          font-family: 'Bai Jamjuree', sans-serif;
           transition: border-color 0.3s;
         }
         .form-group input:focus,
@@ -515,7 +508,7 @@ const CheckoutPage = () => {
           border: 1px solid #ddd;
           border-radius: 4px;
           font-size: 13px;
-          font-family: 'Poppins', sans-serif;
+          font-family: 'Bai Jamjuree', sans-serif;
           resize: vertical;
           min-height: 100px;
         }
@@ -689,7 +682,7 @@ const CheckoutPage = () => {
           color: #fff;
           border: none;
           padding: 15px;
-          font-family: 'Poppins', sans-serif;
+          font-family: 'Bai Jamjuree', sans-serif;
           font-size: 14px;
           font-weight: 600;
           text-transform: uppercase;
